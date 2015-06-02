@@ -7,12 +7,27 @@
         <script src="jquery/jquery-ui.min.js"></script>
         <link href="bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
+        <script src="linkurious/build/sigma.require.js"></script>
+        <script src="linkurious/build/plugins/sigma.parsers.json.min.js"></script>
+        <script src="linkurious/build/plugins/sigma.plugins.neighborhoods.min.js"></script>
+        <script src="relationGraph.js"></script>
         <style type="text/css">
             body, html {
-                background-color: #EEEEEE;
+                background-color: rgb(231,231,231);
+                font-family: "Arial Black", "LiHei Pro";
             }
             .dropdown:hover .dropdown-menu {
                 display: block;
+            }
+            .panel {
+                border: 0;
+            }
+            #relationGraph {
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 500px;
             }
         </style>
     </head>
@@ -27,13 +42,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Brand</a>
+                    <a class="navbar-brand" href="#">THESIS</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="#relation">Relation Graph<span class="sr-only">(current)</span></a></li>
                         <li><a href="#">Link</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -70,5 +85,16 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        <div class="tab-content">
+            <div class="tab-pane active" id="relation">
+                <div class="col-md-7">
+                    <div class="panel panel-default">
+                        <div id="relationGraph"></div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+        </div>
     </body>
 </html>
