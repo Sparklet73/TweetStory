@@ -1,0 +1,86 @@
+/*------------------customized panel---------------------*/
+.btn-apply {
+    margin-top: 3px;
+    color: #fff;
+    background-color: #4E0964;
+    border-color: #4E0964;
+}
+
+.btn-apply:hover, .btn-apply:focus, .btn-apply:active, .btn-apply.active, .open > .dropdown-toggle.btn-apply {
+    color: #98EB18;background-color: #4E0964;border-color: #98EB18;
+}
+
+.btn-apply:active, .btn-apply.active {
+    color: #fff;background-color: #4E0964;border-color: #4E0964;
+    box-shadow: none;
+}
+
+.form-control {
+    height: 200px;
+    border-color: #4E0964;
+}
+.tag-input ul {
+    padding-left: 0;
+    display: inline;
+    list-style-type: none;
+}
+.tag-input li {
+    display: inline-block;
+}
+.tag-input .label {
+    display: inline-block;
+}
+.tag-input .label button {
+    margin-top: -5px;
+    margin-left: 5px;
+}
+/*------------------customized panel end---------------------*/
+/*------------------4 models panel---------------------*/
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #4E0964;
+    border-color: #4E0964;
+    padding: 5px 5px 32px 5px;
+    height: 40px;
+}
+.panel.with-nav-tabs .nav-tabs{
+    border-bottom: none;
+}
+.panel.with-nav-tabs .nav-justified{
+    margin-bottom: -1px;
+}
+.panel-primary {
+    border-color: #4E0964;
+}
+.with-nav-tabs.panel-primary .nav-tabs > li > a,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+    color: #fff;
+    height: 35px;
+}
+.with-nav-tabs.panel-primary .nav-tabs > .open > a,
+.with-nav-tabs.panel-primary .nav-tabs > .open > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+    color: #fff;
+    background-color: #056445;
+
+}
+.with-nav-tabs.panel-primary .nav-tabs > li.active > a,
+.with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
+.with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
+    color: #056445;
+    background-color: #fff;
+
+}
+/*------------------4 models panel end---------------------*/
+
+/*------------------Collect button---------------------*/
+.btn-glyphicon { padding:4px; background:#ffffff; margin-right:2px; }
+.icon-btn { padding: 3px 8px 3px 3px; border-radius:20px;}
+.btn-collect {color: #fff; background-color: #4E0964;}
+.btn-collect:hover, .btn-collect:focus, .btn-collect:active, .btn-collect.active {color: #98EB18;}
+.btn-collect:active, .btn-collect.active {color: #fff;box-shadow: none;}
+.text-collect {color: #4E0964;}
+/*------------------collect button end---------------------*/
