@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>thesisproj_v2</title>
+        <title>Browsing Room</title>
         <meta charset="utf-8">
         <script src="jquery/jquery-2.1.3.min.js"></script>
         <script src="jquery/jquery-ui.min.js"></script>
@@ -55,14 +55,14 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-brand">
                         <a href="#">
-                            Tweet Story...
+                            Tweet News Story
                         </a>
                     </li>
                     <li>
-                        <a href="#">Browsing Room</a>
+                        <a href="browsing.php">Browsing Room</a>
                     </li>
                     <li>
-                        <a href="#">Materials Room</a>
+                        <a href="materials.php">Materials Room</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
