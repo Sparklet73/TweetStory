@@ -16,20 +16,20 @@ $(document).ready(function () {
         }
     });
 
-    sigma.parsers.json('rt10noun.json',
-            s,
-            function () {
-                s.settings({
-                    defaultLabelSize: 18,
-                    font: "微軟正黑體",
-                    labelHoverBGColor: 'node',
-                    defaultLabelHoverColor: '#000',
-                    labelHoverShadow: 'node',
-                    labelThreshold: 3
-                });
-                s.refresh();
-            }
-    );
+//    sigma.parsers.json('rt10noun.json',
+//            s,
+//            function () {
+//                s.settings({
+//                    defaultLabelSize: 18,
+//                    font: "微軟正黑體",
+//                    labelHoverBGColor: 'node',
+//                    defaultLabelHoverColor: '#000',
+//                    labelHoverShadow: 'node',
+//                    labelThreshold: 3
+//                });
+//                s.refresh();
+//            }
+//    );
 
 
     db = new sigma.plugins.neighborhoods();
@@ -94,7 +94,29 @@ $(document).ready(function () {
                 }
         );
     });
-
+    
+    $('ul.nav a').on('shown.bs.tab', function (e) {
+        sigma.parsers.json('rt10noun.json',
+                s,
+                function () {
+                    s.settings({
+                        defaultLabelSize: 18,
+                        font: "微軟正黑體",
+                        labelHoverBGColor: 'node',
+                        defaultLabelHoverColor: '#000',
+                        labelHoverShadow: 'node',
+                        labelThreshold: 3
+                    });
+                    s.camera.goTo({
+                        x: 0,
+                        y: 0,
+                        angle: 0,
+                        ratio: 1
+                    });
+                    s.refresh();
+                }
+        );
+    });
 
     /*var listener = sigma.layouts.fruchtermanReingold.configure(s);
      // Bind all events:

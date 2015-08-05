@@ -11,40 +11,87 @@
         <script src="linkurious/build/sigma.require.js"></script>
         <script src="linkurious/build/plugins/sigma.parsers.json.min.js"></script>
         <script src="linkurious/build/plugins/sigma.plugins.neighborhoods.min.js"></script>
+        <script src="linkurious/build/plugins/sigma.plugins.filter.min.js"></script>
         <script src="relationGraph.js"></script>
         <script src="userGraph.js"></script>
+        <script src="filterUsers.js"></script>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="tweetParser/css/tweetParser.css" type="text/css" />
         <link rel="stylesheet" href="css/simple-sidebar.css" type="text/css" />
+        <link href="editable/css/bootstrap-editable.css" rel="stylesheet">
+        <script src="editable/js/bootstrap-editable.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="keywordsGraph.js"></script>
         <style type="text/css">    
             body, html {
                 background-color: rgb(245,245,245);
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
                 overflow: hidden; //no scrollable bar
             }
-            #relationGraph {
+            #relationGraph, #userGraph, #keywordsGraph {
                 top: 0;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                height: 360px;
-            }
-            #userGraph {
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 360px;
+                height: 400px;
             }
             .panel-primary {
                 margin-left: 15px;
                 margin-right: 25px;
                 width: 93%;
             }
+
             #well2 {
                 margin-bottom: 0;
                 border-color:#056445
             }
+            //----usergraph filter----//
+            #control-pane {
+                top: 10px;
+                /*bottom: 10px;*/
+                right: 10px;
+                position: absolute;
+                width: 200px;
+                background-color: rgb(249, 247, 237);
+                box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            }
+            #control-pane > div {
+                margin: 10px;
+                overflow-x: auto;
+            }
+            .line {
+                clear: both;
+                display: block;
+                width: 100%;
+                margin: 0;
+                padding: 12px 0 0 0;
+                border-bottom: 1px solid #aac789;
+                background: transparent;
+            }
+            h2, h3, h4 {
+                padding: 0;
+                font-variant: small-caps;
+            }
+            .green {
+                color: #437356;
+            }
+            h2.underline {
+                color: #437356;
+                background: #f4f0e4;
+                margin: 0;
+                border-radius: 2px;
+                padding: 8px 12px;
+                font-weight: 700;
+            }
+            .hidden {
+                display: none;
+                visibility: hidden;
+            }
+            input[type=range] {
+                display: inline;
+                width: 50px;
+            }
+            //----usergraph filter end-----
         </style>
     </head>
 
@@ -81,7 +128,7 @@
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                     <div class="col-md-5">
-                        Tweet Display Area
+                        <h2>Tweet Display Area</h2>
                         <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;">
                             <div class="row">
                                 <div class="panel panel-primary">
@@ -90,6 +137,16 @@
                                         刘植荣：【香港“反占中”游行花钱雇佣参与者】印佣组织发言人表示，有雇主要求她们交出身分证号码，并在表格上签名，因外佣不懂中文，所以不知表格的用意。会员被游说参加八一七游行，并称可提供200至300元酬劳，而说客称游行是为了香港的和平及繁荣，但没有详细解释原因
                                     </p>
                                     <br>
+
+                                    <a href="#" id="username" data-type="text" data-pk="1">Insert memo..</a>
+                                    <script>
+                                        $(function () {
+                                            $('#username').editable({
+                                                url: '/post',
+                                                title: 'Enter username'
+                                            });
+                                        });
+                                    </script>
                                     <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
                                 </div>
                                 <div class="panel panel-primary"> 
@@ -181,7 +238,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="row">
-                                    <h3>Customized Tags Panel</h3>
+                                    <h2>Selected Tags</h2>
                                     <div class="input-group">
                                         <div class="form-control tag-input" >
                                             <ul>
@@ -239,22 +296,34 @@
                                 <div class="panel with-nav-tabs panel-primary">
                                     <div class="panel-heading">
                                         <ul class="nav nav-tabs pull-right">
-                                            <li class="active"><a href="#tab1primary" data-toggle="tab">Time</a></li>
-                                            <li><a href="#tab2primary" data-toggle="tab">Keywords</a></li>
+                                            <li><a href="#tab1primary" data-toggle="tab">Time</a></li>
+                                            <li class="active"><a href="#tab2primary" data-toggle="tab">Keywords</a></li>
                                             <li><a href="#tab3primary" data-toggle="tab">Users</a></li>
                                             <li><a href="#tab4primary" data-toggle="tab">Noun Co-word</a></li>
                                         </ul>
                                     </div>
-                                    <div class="panel-body" style="height: 440px;">
+                                    <div class="panel-body" style="height: 450px; padding: 2px;">
                                         <div class="tab-content">
-                                            <div class="tab-pane fade in active" id="tab1primary">
+                                            <div class="tab-pane fade " id="tab1primary">
 
                                             </div>
-                                            <div class="tab-pane fade" id="tab2primary">
-
+                                            <div class="tab-pane fade in active" id="tab2primary">
+                                                <div id="keywordsGraph"></div>
                                             </div>
                                             <div class="tab-pane fade" id="tab3primary">
-                                                <div id="userGraph"></div>
+                                                <div class="col-md-10" style="padding:0px;">
+                                                    <div id="userGraph"></div>
+                                                </div>
+                                                <div class="col-md-2" style="padding:0px;">
+                                                    <div id="control-pane">
+                                                        <h2 class="underline">filters</h2>
+                                                        <div>
+                                                            <h3>min degree <span id="min-degree-val">0</span></h3>
+                                                            0 <input id="min-degree" type="range" min="0" max="0" value="0"> <span id="max-degree-value">0</span><br>
+                                                        </div>
+                                                        <span class="line"></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="tab-pane fade" id="tab4primary">
                                                 <div class="panel panel-default">
@@ -270,7 +339,7 @@
                         </div>
 
 
-                        History
+                        <h2>History</h2>
                         <div class="row" style="overflow-x: hidden; overflow-y:auto; height: 120px;">
                             <div class="well" id="well2">
                                 <div class="list-group"> 
