@@ -20,8 +20,10 @@
         <link rel="stylesheet" href="css/simple-sidebar.css" type="text/css" />
         <link href="editable/css/bootstrap-editable.css" rel="stylesheet">
         <script src="editable/js/bootstrap-editable.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="d3/d3.min.js"></script>
         <script src="keywordsGraph.js"></script>
+        <script src="highcharts/highcharts.js"></script>
+        <script src="timeChart.js"></script>
         <style type="text/css">    
             body, html {
                 background-color: rgb(245,245,245);
@@ -296,18 +298,18 @@
                                 <div class="panel with-nav-tabs panel-primary">
                                     <div class="panel-heading">
                                         <ul class="nav nav-tabs pull-right">
-                                            <li><a href="#tab1primary" data-toggle="tab">Time</a></li>
-                                            <li class="active"><a href="#tab2primary" data-toggle="tab">Keywords</a></li>
+                                            <li class="active"><a href="#tab1primary" data-toggle="tab">Time</a></li>
+                                            <li><a href="#tab2primary" data-toggle="tab">Keywords</a></li>
                                             <li><a href="#tab3primary" data-toggle="tab">Users</a></li>
                                             <li><a href="#tab4primary" data-toggle="tab">Noun Co-word</a></li>
                                         </ul>
                                     </div>
                                     <div class="panel-body" style="height: 450px; padding: 2px;">
                                         <div class="tab-content">
-                                            <div class="tab-pane fade " id="tab1primary">
-
+                                            <div class="tab-pane fade in active" id="tab1primary">
+                                                <div id="timeChart" style="overflow-y: hidden; overflow-x:auto;"></div>
                                             </div>
-                                            <div class="tab-pane fade in active" id="tab2primary">
+                                            <div class="tab-pane fade" id="tab2primary">
                                                 <div id="keywordsGraph"></div>
                                             </div>
                                             <div class="tab-pane fade" id="tab3primary">
