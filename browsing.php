@@ -30,11 +30,11 @@
                 overflow: hidden; //no scrollable bar
             }
             #relationGraph, #userGraph, #keywordsGraph {
-                top: 0;
+/*                top: 0;
                 bottom: 0;
                 left: 0;
-                right: 0;
-                height: 400px;
+                right: 0;*/
+                height: 445px;
             }
             .panel-primary {
                 margin-left: 15px;
@@ -93,6 +93,23 @@
                 width: 50px;
             }
             //----usergraph filter end-----
+            //----keywordsGraph 的設定------
+            .wordnode {
+                cursor: pointer;
+            }
+            .wordnode:hover {
+                stroke: #000;
+                stroke-width: 1.5px;
+            }
+            .wordnode--leaf {
+                fill: white;
+            }
+            .label,
+            .wordnode--root,
+            .wordnode--leaf {
+                pointer-events: none;
+            }
+            //----keywordsGraph 設定 結束-----
         </style>
     </head>
 
@@ -323,7 +340,7 @@
                                         <div class="panel panel-default">
                                             <button type="button" name="restart-camera" id="restart-camera" class="btn btn-default">Reset Camera</button>
                                             <button type="button" name="reset-graph" id="reset-graph" class="btn btn-default">Reset Graph</button>
-                                            <div id="relationGraph"></div>
+                                            <div id="relationGraph" style="height:410px;"></div>
                                         </div>
                                     </div>
                                 </div>
