@@ -23,9 +23,6 @@ $(document).ready(function () {
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
     d3.json("keywordsGraph.json", function (error, root) {
-        if (error)
-            throw error;
-
         var focus = root,
                 nodes = pack.nodes(root),
                 view;

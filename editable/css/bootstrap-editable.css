@@ -2,6 +2,9 @@
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2013 Vitaliy Potapov; Licensed MIT */
+textarea.form-control {
+    height: 100px;
+}
 .editableform {
     margin-bottom: 0; /* overwrites bootstrap margin */
 }
@@ -10,6 +13,7 @@
     margin-bottom: 0; /* overwrites bootstrap margin */
     white-space: nowrap; /* prevent wrapping buttons on new line */
     line-height: 20px; /* overwriting bootstrap line-height. See #133 */
+    max-height: 100px;
 }
 
 /* 

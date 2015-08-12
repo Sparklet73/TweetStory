@@ -51,7 +51,7 @@ footer a, footer a:hover {color: #3498db}
 .iframe-container iframe{display:inline-block;padding:0 7.5px;margin:auto}
 
 .tweet-container {height: 640px;background-color: rgb(255,255,255);}
-.tweet-container .row>div{padding:15px;margin-bottom:2px;border:1px solid #4E0964;border-radius: 5px}
+.tweet-container .row>div{padding:12px;margin-bottom:2px;border:1px solid #2E4272;border-radius: 3px}
 .tweet-container h2 {color: #34495e;padding-bottom:15px}.tweet_link{color:#1abc9c}
 .tweet_user {color: #3947cc}
 .hashtag{color:#f39c12}

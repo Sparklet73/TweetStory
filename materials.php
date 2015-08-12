@@ -16,7 +16,6 @@
         <link href="draggable/application.css" rel="stylesheet"/>
         <style type="text/css">
             body, html {
-                background-color: rgb(255,245,245);
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
                 //overflow: hidden; //no scrollable bar
             }
