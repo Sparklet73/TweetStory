@@ -1,40 +1,3 @@
-/*------------------customized panel---------------------*/
-.btn-apply {
-    margin-top: 3px;
-    color: #fff;
-    background-color: #2E4272;
-    border-color: #2E4272;
-}
-
-.btn-apply:hover, .btn-apply:focus, .btn-apply:active, .btn-apply.active, .open > .dropdown-toggle.btn-apply {
-    color: #98EB18;background-color: #2E4272;border-color: #98EB18;
-}
-
-.btn-apply:active, .btn-apply.active {
-    color: #fff;background-color: #2E4272;border-color: #2E4272;
-    box-shadow: none;
-}
-
-.form-control {
-    height: 200px;
-    border-color: #2E4272;
-}
-.tag-input ul {
-    padding-left: 0;
-    display: inline;
-    list-style-type: none;
-}
-.tag-input li {
-    display: inline-block;
-}
-.tag-input .label {
-    display: inline-block;
-}
-.tag-input .label button {
-    margin-top: -5px;
-    margin-left: 5px;
-}
-/*------------------customized panel end---------------------*/
 /*------------------tweets list css---------------------*/
 .panel-info>.panel-heading {
     color: #fff;
@@ -44,10 +7,9 @@
     height: 40px;
 }
 .panel-info {
-    border-color: #2E4272;
     margin-left: 15px;
-    margin-right: 25px;
-    width: 93%;
+    margin-right: 15px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 }
 div.panel.panel-info:hover {border-color:#5E76AD;}
 /*------------------tweets list css end---------------------*/
@@ -64,9 +26,11 @@ div.panel.panel-info:hover {border-color:#5E76AD;}
 }
 .panel.with-nav-tabs .nav-justified{
     margin-bottom: -1px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 }
 .panel-primary {
-    border-color: #2E4272;
+    border-color: #ccc;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
 .with-nav-tabs.panel-primary .nav-tabs > li > a,
@@ -96,7 +60,7 @@ div.panel.panel-info:hover {border-color:#5E76AD;}
 /*------------------Collect button---------------------*/
 .btn-glyphicon { padding:4px; background:#ffffff; margin-right:2px; }
 .icon-btn { padding: 3px 8px 3px 3px; border-radius:20px;}
-.btn-collect {color: #fff; background-color: #2E4272;}
+.btn-collect {color: #fff; background-color: #2E4272; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);}
 .btn-collect:hover, .btn-collect:focus, .btn-collect:active, .btn-collect.active {color: #98EB18;}
 .btn-collect:active, .btn-collect.active {color: #fff;box-shadow: none;}
 .text-collect {color: #2E4272;}

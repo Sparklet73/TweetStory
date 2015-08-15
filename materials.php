@@ -57,6 +57,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="browsing.php">Browsing Room<span class="sr-only">(current)</span></a></li>
                             <li class="active"><a href="#">Materials Room</a></li>
+                            <li><a href="history.php">History</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <p class="navbar-text">Dataset: HKALLzh --- 497,519 tweets (from 2014-08-24 22:06:20 to 2014-12-17 13:55:22)</p>

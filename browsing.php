@@ -128,6 +128,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Browsing Room<span class="sr-only">(current)</span></a></li>
                             <li><a href="materials.php">Materials Room</a></li>
+                            <li><a href="history.php">History</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <p class="navbar-text">Dataset: HKALLzh --- 497,519 tweets (from 2014-08-24 22:06:20 to 2014-12-17 13:55:22)</p>
@@ -246,8 +247,7 @@
                     </div>
                 </div>
 
-
-                <h2>History</h2>
+<!--                <h2>History</h2>
                 <div class="row" style="overflow-x: hidden; overflow-y:auto; height: 120px;">
                     <div class="well" id="well2">
                         <div class="list-group"> 
@@ -292,7 +292,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </body>
