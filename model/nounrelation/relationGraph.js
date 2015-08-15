@@ -65,8 +65,9 @@ $(document).ready(function () {
 
         $("button[name='add-tags-noun']").click(function () {
             for (var nn in NowNodes) {
-                $('#TagsArea').append($("<option></option>").attr("value", "option" + NowNodes[nn]['label']).text(NowNodes[nn]['label']));
-                $('#TagsArea').multiSelect('refresh');
+                $('#TagsArea').multiSelect('addOption', {value: "option" + NowNodes[nn]['label'], text: NowNodes[nn]['label'], index: 0, nested: 'Nouns'});
+//                $('#TagsArea').append($("<option></option>").attr("value", "option" + NowNodes[nn]['label']).text(NowNodes[nn]['label']));
+//                $('#TagsArea').multiSelect('refresh');
             }
             var found = [];
             $("#TagsArea option").each(function () {
@@ -74,7 +75,7 @@ $(document).ready(function () {
                     $(this).remove();
                 found.push(this.value);
             });
-            $('#TagsArea').multiSelect('refresh');
+//            $('#TagsArea').multiSelect('refresh');
         });
 
     });

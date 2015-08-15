@@ -52,8 +52,9 @@ $(document).ready(function () {
                         events: {
                             click: function () {
                                 d = Highcharts.dateFormat('%Y-%m-%d', this.x);
-                                $('#TagsArea').append($("<option></option>").attr("value", "option"+d).text(d));
-                                $('#TagsArea').multiSelect('refresh');
+//                                $('#TagsArea').append($("<option></option>").attr("value", "option" + d).text(d));
+                                $('#TagsArea').multiSelect('addOption', {value: "option"+d, text: d, index: 0, nested: 'Time'});
+//                                $('#TagsArea').multiSelect('refresh');
                             }
                         }
                     }

@@ -32,12 +32,12 @@
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
                 overflow: hidden; //no scrollable bar
             }
-            #relationGraph, #userGraph, #keywordsGraph {
+            #timeChart, #relationGraph, #userGraph, #keywordsGraph {
                 /*                top: 0;
                                 bottom: 0;
                                 left: 0;
                                 right: 0;*/
-                height: 445px;
+                height: 460px;
             }
             #well2 {
                 margin-bottom: 0;
@@ -175,13 +175,15 @@
                         <div class="row">
                             <h2>Tags</h2>
                             <select id='TagsArea' multiple='multiple'>
-                                <!--                                <option value='elem_1' selected>elem 1</option>
-                                                                <option value='elem_2'>elem 2</option>-->
+                                <optgroup label="Time"></optgroup>
+                                <optgroup label="Keywords"></optgroup>
+                                <optgroup label="Users"></optgroup>
+                                <optgroup label="Nouns"></optgroup>
                             </select>
                             <script>
                                 $('#TagsArea').multiSelect({
                                     selectableHeader: "<div class='TagsArea'>Selected tags</div>",
-                                    selectionHeader: "<div class='TagsArea'>Applied tagss</div>"
+                                    selectionHeader: "<div class='TagsArea'>Applied tagss</div>",
                                 });
                             </script>
                         </div>
@@ -204,7 +206,7 @@
                                     <li><a href="#tab4primary" data-toggle="tab">Noun Co-word</a></li>
                                 </ul>
                             </div>
-                            <div class="panel-body" style="height: 450px; padding: 2px;">
+                            <div class="panel-body" style="height: 500px; padding: 2px;">
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="tab1primary">
                                         <div id="timeChart" style="overflow-y: hidden; overflow-x:auto;"></div>
@@ -238,7 +240,7 @@
                                                 <button type="button" name="reset-graph" id="reset-graph" class="btn btn-default">Reset graph</button>
                                                 <button type="button" name="add-tags-noun" id="add-tags-noun" class="btn btn-default">Add tags</button>
                                             </div>
-                                            <div id="relationGraph" style="height:410px;"></div>
+                                            <div id="relationGraph"></div>
                                         </div>
                                     </div>
                                 </div>

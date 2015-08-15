@@ -72,14 +72,15 @@ $(document).ready(function () {
                         var lb = event.data.node.label;
 //                        var web = "http://twitter.com/" + lb;
 //                        window.open(web, lb, config = 'height=500,width=600');
-                        $('#TagsArea').append($("<option></option>").attr("value", "optionUser" + lb).text(lb));
+//                        $('#TagsArea').append($("<option></option>").attr("value", "option" + lb).text(lb));
+                        $('#TagsArea').multiSelect('addOption', {value: "option"+lb, text: lb, index: 0, nested: 'Users'});
                         var found = [];
                         $("#TagsArea option").each(function () {
                             if ($.inArray(this.value, found) !== -1)
                                 $(this).remove();
                             found.push(this.value);
                         });
-                        $('#TagsArea').multiSelect('refresh');
+//                        $('#TagsArea').multiSelect('refresh');
                     });
                     // Initialize the Filter API
                     filter = new sigma.plugins.filter(s2);
