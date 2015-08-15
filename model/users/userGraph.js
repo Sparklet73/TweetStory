@@ -70,8 +70,16 @@ $(document).ready(function () {
                     s2.refresh();
                     s2.bind('clickNode', function (event) {
                         var lb = event.data.node.label;
-                        var web = "http://twitter.com/" + lb;
-                        window.open(web, lb, config = 'height=500,width=600');
+//                        var web = "http://twitter.com/" + lb;
+//                        window.open(web, lb, config = 'height=500,width=600');
+                        $('#TagsArea').append($("<option></option>").attr("value", "optionUser" + lb).text(lb));
+                        var found = [];
+                        $("#TagsArea option").each(function () {
+                            if ($.inArray(this.value, found) !== -1)
+                                $(this).remove();
+                            found.push(this.value);
+                        });
+                        $('#TagsArea').multiSelect('refresh');
                     });
                     // Initialize the Filter API
                     filter = new sigma.plugins.filter(s2);

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var margin = 5,
-            width = 475,
+            width = 500,
             height = 445;
 //            diameter = 445;
 
@@ -37,6 +37,7 @@ $(document).ready(function () {
                     return d.children ? color(d.depth) : null;
                 })
                 .on("click", function (d) {
+                    myNode = d;
                     if (focus !== d) {
                         zoom(d), d3.event.stopPropagation();
                     }
@@ -69,7 +70,8 @@ $(document).ready(function () {
         zoomTo([root.x, root.y, root.r * 2 + margin]);
 
         function zoom(d) {
-            var focus0 = focus; focus = d;
+            var focus0 = focus;
+            focus = d;
 
             //將var transition=d3.transition()改成var transition = text.transition()
             var transition = text.transition()
@@ -83,20 +85,38 @@ $(document).ready(function () {
 
             //將transition.selectAll("text")的.selectAll("text")拔掉
             transition.filter(function (d) {
-                        return d.parent === focus || this.style.display === "inline";
-                    })
+                return d.parent === focus || this.style.display === "inline";
+            })
                     .style("fill-opacity", function (d) {
                         return d.parent === focus ? 1 : 0;
                     })
                     .each("start", function (d) {
-                        if (d.parent === focus)
+                        if (d.parent === focus) {
                             this.style.display = "inline";
+                        }
                     })
                     .each("end", function (d) {
-                        if (d.parent !== focus)
+                        if (d.parent !== focus) {
                             this.style.display = "none";
+                        }
                     });
+
         }
+//            執行點選cluster加入tags的動作
+        $("button[name='add-tags-topics']").click(function () {
+            $('#TagsArea').append($("<option></option>").attr("value", "option" + myNode['name']).text(myNode['name']));
+            for (var ww in myNode['children']) {
+                $('#TagsArea').append($("<option></option>").attr("value", "option" + myNode['children'][ww]['name']).text(myNode['children'][ww]['name']));
+            }
+//            防止有重複的tags
+            var found = [];
+            $("#TagsArea option").each(function () {
+                if ($.inArray(this.value, found) !== -1)
+                    $(this).remove();
+                found.push(this.value);
+            });
+            $('#TagsArea').multiSelect('refresh');
+        });
 
         function zoomTo(v) {
             var k = height / v[2];

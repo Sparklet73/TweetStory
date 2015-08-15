@@ -54,13 +54,29 @@ $(document).ready(function () {
 
         }
 
+        var NowNodes;
         // Let's now bind this new function to the "clickNode" event:
         s.bind('clickNode', function (event) {
             var nodeId = event.data.node.id;
             refreshGraph(nodeId);
-            var nodeLabel = event.data.node.label;
-            console.log(db.neighborhood(nodeId).nodes);
+//            var nodeLabel = event.data.node.label;
+            NowNodes = db.neighborhood(nodeId).nodes;
         });
+
+        $("button[name='add-tags-noun']").click(function () {
+            for (var nn in NowNodes) {
+                $('#TagsArea').append($("<option></option>").attr("value", "option" + NowNodes[nn]['label']).text(NowNodes[nn]['label']));
+                $('#TagsArea').multiSelect('refresh');
+            }
+            var found = [];
+            $("#TagsArea option").each(function () {
+                if ($.inArray(this.value, found) !== -1)
+                    $(this).remove();
+                found.push(this.value);
+            });
+            $('#TagsArea').multiSelect('refresh');
+        });
+
     });
 
 
@@ -71,10 +87,6 @@ $(document).ready(function () {
             angle: 0,
             ratio: 1
         });
-    });
-    
-    $("button[name='add-tags']").click(function () {
-        
     });
 
     $("button[name='reset-graph']").click(function () {
@@ -99,7 +111,7 @@ $(document).ready(function () {
                 }
         );
     });
-    
+
     $('ul.nav a').on('shown.bs.tab', function (e) {
         sigma.parsers.json('model/nounrelation/rt10noun.json',
                 s,

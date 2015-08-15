@@ -53,10 +53,6 @@
                 background-color: rgb(249, 247, 237);
                 box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             }
-            #control-pane > div {
-                margin: 10px;
-                overflow-x: auto;
-            }
             .line {
                 clear: both;
                 display: block;
@@ -214,10 +210,14 @@
                                         <div id="timeChart" style="overflow-y: hidden; overflow-x:auto;"></div>
                                     </div>
                                     <div class="tab-pane fade" id="tab2primary">
+                                        <div style="text-align: right;">
+                                            <button type="button" name="add-tags-topics" id="add-tags-topics" class="btn btn-default">Add tags</button>
+                                        </div>
                                         <div id="keywordsGraph"></div>
                                     </div>
                                     <div class="tab-pane fade" id="tab3primary">
                                         <div class="col-md-10" style="padding:0px;">
+                                            <ul>Click the user point to add tag.</ul>
                                             <div id="userGraph"></div>
                                         </div>
                                         <div class="col-md-2" style="padding:0px;">
@@ -233,10 +233,10 @@
                                     </div>
                                     <div class="tab-pane fade" id="tab4primary">
                                         <div class="panel panel-default">
-                                            <div style="text-align: center;">
+                                            <div style="text-align: right;">
                                                 <button type="button" name="restart-camera" id="restart-camera" class="btn btn-default">Reset camera</button>
                                                 <button type="button" name="reset-graph" id="reset-graph" class="btn btn-default">Reset graph</button>
-                                                <button type="button" name="add-tags" id="add-tags" class="btn btn-default">Add tags</button>
+                                                <button type="button" name="add-tags-noun" id="add-tags-noun" class="btn btn-default">Add tags</button>
                                             </div>
                                             <div id="relationGraph" style="height:410px;"></div>
                                         </div>
@@ -247,52 +247,52 @@
                     </div>
                 </div>
 
-<!--                <h2>History</h2>
-                <div class="row" style="overflow-x: hidden; overflow-y:auto; height: 120px;">
-                    <div class="well" id="well2">
-                        <div class="list-group"> 
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">#滕彪 李克强：推销中国高铁我特别有底气 - 　　8月22日，李克强考察中国铁路总公司，他在铁路运输...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">RT @siutopoon: 何姨姨就是用這份中共喉舌於１９４４年２月日的社論，秒殺李飛的！且看中共當年如何狠批有篩選的假普選！ http://t.co/35tZa568EB</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">同行的Vivian 遇上一位北京人，北京人說不會到香港，因為香港有佔中。至少，知道佔中。</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">戴耀廷回应李飞：人大作不合理决定即发动占中 http://t.co/hoauI5p4cC</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">「由原燒看台灣人的民族性?」不得不說我非常認同・・・日本能夠在服務業打著客人至上的原則，那無非是有素養高的國民在背後支撐。而我認為這套原則在台灣的服務業中未必是全面適用，到頭來只會淪為消費者占小便宜的說詞罷了。</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <p class="list-group-item-text">Some text...</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>-->
+                <!--                <h2>History</h2>
+                                <div class="row" style="overflow-x: hidden; overflow-y:auto; height: 120px;">
+                                    <div class="well" id="well2">
+                                        <div class="list-group"> 
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">#滕彪 李克强：推销中国高铁我特别有底气 - 　　8月22日，李克强考察中国铁路总公司，他在铁路运输...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">RT @siutopoon: 何姨姨就是用這份中共喉舌於１９４４年２月日的社論，秒殺李飛的！且看中共當年如何狠批有篩選的假普選！ http://t.co/35tZa568EB</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">同行的Vivian 遇上一位北京人，北京人說不會到香港，因為香港有佔中。至少，知道佔中。</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">戴耀廷回应李飞：人大作不合理决定即发动占中 http://t.co/hoauI5p4cC</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">「由原燒看台灣人的民族性?」不得不說我非常認同・・・日本能夠在服務業打著客人至上的原則，那無非是有素養高的國民在背後支撐。而我認為這套原則在台灣的服務業中未必是全面適用，到頭來只會淪為消費者占小便宜的說詞罷了。</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                            <a href="#" class="list-group-item">
+                                                <p class="list-group-item-text">Some text...</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>-->
             </div>
         </div>
     </body>

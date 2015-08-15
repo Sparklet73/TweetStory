@@ -8,8 +8,7 @@ $(document).ready(function () {
                 text: 'Tweets per day'
             },
             subtitle: {
-                text: document.ontouchstart === undefined ?
-                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+                text: 'Click and drag in the plot area to zoom in. <br> Click the point to add tag.'
             },
             xAxis: {
                 type: 'datetime'
