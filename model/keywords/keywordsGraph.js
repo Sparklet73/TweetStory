@@ -22,7 +22,7 @@ $(document).ready(function () {
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    d3.json("keywordsGraph.json", function (error, root) {
+    d3.json("model/keywords/keywordsGraph.json", function (error, root) {
         var focus = root,
                 nodes = pack.nodes(root),
                 view;

@@ -56,7 +56,7 @@ $(document).ready(function () {
 //    );
 
     $('ul.nav a').on('shown.bs.tab', function (e) {
-        sigma.parsers.json('mention250_filter_50n.json',
+        sigma.parsers.json('model/users/mention250_filter_50n.json',
                 s2,
                 function () {
                     s2.settings({

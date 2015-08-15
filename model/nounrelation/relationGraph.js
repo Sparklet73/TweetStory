@@ -34,7 +34,7 @@ $(document).ready(function () {
 
     db = new sigma.plugins.neighborhoods();
 
-    db.load('rt10noun.json', function () {
+    db.load('model/nounrelation/rt10noun.json', function () {
         // Out function to initialize sigma on a new neighborhood:
         function refreshGraph(centerNodeId) {
             s.camera.goTo({
@@ -58,7 +58,8 @@ $(document).ready(function () {
         s.bind('clickNode', function (event) {
             var nodeId = event.data.node.id;
             refreshGraph(nodeId);
-            //var nodeLabel = event.data.node.label;
+            var nodeLabel = event.data.node.label;
+            console.log(db.neighborhood(nodeId).nodes);
         });
     });
 
@@ -71,9 +72,13 @@ $(document).ready(function () {
             ratio: 1
         });
     });
+    
+    $("button[name='add-tags']").click(function () {
+        
+    });
 
     $("button[name='reset-graph']").click(function () {
-        sigma.parsers.json('rt10noun.json',
+        sigma.parsers.json('model/nounrelation/rt10noun.json',
                 s,
                 function () {
                     s.settings({
@@ -96,7 +101,7 @@ $(document).ready(function () {
     });
     
     $('ul.nav a').on('shown.bs.tab', function (e) {
-        sigma.parsers.json('rt10noun.json',
+        sigma.parsers.json('model/nounrelation/rt10noun.json',
                 s,
                 function () {
                     s.settings({

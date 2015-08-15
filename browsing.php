@@ -5,6 +5,8 @@
         <meta charset="utf-8">
         <script src="jquery/jquery-2.1.3.min.js"></script>
         <script src="jquery/jquery-ui.min.js"></script>
+        <script src="jquery/multiselect/jquery.multi-select.js"></script>
+        <link rel="stylesheet" href="jquery/multiselect/multi-select.css" type="text/css" />
         <link href="bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
         <script src="tweetParser/jquery.tweetParser.min.js"></script>
@@ -12,17 +14,18 @@
         <script src="linkurious/build/plugins/sigma.parsers.json.min.js"></script>
         <script src="linkurious/build/plugins/sigma.plugins.neighborhoods.min.js"></script>
         <script src="linkurious/build/plugins/sigma.plugins.filter.min.js"></script>
-        <script src="relationGraph.js"></script>
-        <script src="userGraph.js"></script>
-        <script src="filterUsers.js"></script>
+        <script src="addNewTags.js"></script>
+        <script src="model/nounrelation/relationGraph.js"></script>
+        <script src="model/users/userGraph.js"></script>
+        <script src="model/users/filterUsers.js"></script>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="tweetParser/css/tweetParser.css" type="text/css" />
         <link href="editable/css/bootstrap-editable.css" rel="stylesheet">
         <script src="editable/js/bootstrap-editable.js"></script>
         <script src="d3/d3.min.js"></script>
-        <script src="keywordsGraph.js"></script>
+        <script src="model/keywords/keywordsGraph.js"></script>
         <script src="highcharts/highcharts.js"></script>
-        <script src="timeChart.js"></script>
+        <script src="model/time/timeChart.js"></script>
         <style type="text/css">    
             body, html {
                 background-color: rgb(245,245,245);
@@ -173,61 +176,28 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="row">
-                            <h2>Selected Tags</h2>
-                            <div class="input-group">
-                                <div class="form-control tag-input" >
-                                    <ul>
-                                        <li>
-                                            <span class="label label-default">
-                                                梁振英
-                                                <button type="button" class="close" data-dismiss="li">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    <span class="sr-only">Close</span>
-                                                </button>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="label label-primary">
-                                                10/7
-                                                <button type="button" class="close" data-dismiss="li">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    <span class="sr-only">Close</span>
-                                                </button>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="label label-success">
-                                                普选权           
-                                                <button type="button" class="close" data-dismiss="li">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    <span class="sr-only">Close</span>
-                                                </button>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="label label-default">
-                                                曾伟雄
-                                                <button type="button" class="close" data-dismiss="li">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    <span class="sr-only">Close</span>
-                                                </button>
-                                            </span>
-                                        </li>
-                                    </ul>
-
-                                </div> 
-                                <button class="btn btn-apply" type="button">Apply</button>
-                            </div>
+                            <h2>Tags</h2>
+                            <select id='TagsArea' multiple='multiple'>
+                                <!--                                <option value='elem_1' selected>elem 1</option>
+                                                                <option value='elem_2'>elem 2</option>-->
+                            </select>
+                            <script>
+                                $('#TagsArea').multiSelect({
+                                    selectableHeader: "<div class='TagsArea'>Selected tags</div>",
+                                    selectionHeader: "<div class='TagsArea'>Applied tagss</div>"
+                                });
+                            </script>
                         </div>
-<!--                        <br>
-                        <div class="row">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">Information Panel</div>
-                                <div class="panel-body">...</div>
-                            </div>
-                        </div>-->
+                        <!--                        <br>
+                                                <div class="row">
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">Information Panel</div>
+                                                        <div class="panel-body">...</div>
+                                                    </div>
+                                                </div>-->
                     </div>
                     <div class="col-md-8">
+                        <h2>Story elements model</h2>
                         <div class="panel with-nav-tabs panel-primary">
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs pull-right">
@@ -262,8 +232,11 @@
                                     </div>
                                     <div class="tab-pane fade" id="tab4primary">
                                         <div class="panel panel-default">
-                                            <button type="button" name="restart-camera" id="restart-camera" class="btn btn-default">Reset Camera</button>
-                                            <button type="button" name="reset-graph" id="reset-graph" class="btn btn-default">Reset Graph</button>
+                                            <div style="text-align: center;">
+                                                <button type="button" name="restart-camera" id="restart-camera" class="btn btn-default">Reset camera</button>
+                                                <button type="button" name="reset-graph" id="reset-graph" class="btn btn-default">Reset graph</button>
+                                                <button type="button" name="add-tags" id="add-tags" class="btn btn-default">Add tags</button>
+                                            </div>
                                             <div id="relationGraph" style="height:410px;"></div>
                                         </div>
                                     </div>
