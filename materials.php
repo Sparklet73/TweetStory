@@ -11,7 +11,6 @@
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
         <script src="summernote/summernote.min.js"></script>
         <link href="summernote/summernote.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/simple-sidebar.css" type="text/css" />
         <script src="draggable/jquery-sortable-min.js"></script>
         <link href="draggable/application.css" rel="stylesheet"/>
         <style type="text/css">

@@ -105,10 +105,10 @@ $(document).ready(function () {
 //            執行點選cluster加入tags的動作
         $("button[name='add-tags-topics']").click(function () {
 //            $('#TagsArea').append($("<option></option>").attr("value", "option" + myNode['name']).text(myNode['name']));
-            $('#TagsArea').multiSelect('addOption', {value: "option" + myNode['name'], text: myNode['name'], index: 0, nested: 'Keywords'});
+            $('#TagsArea').multiSelect('addOption', {value: "Keywords|" + myNode['name'], text: myNode['name'], index: 0, nested: 'Keywords'});
             for (var ww in myNode['children']) {
 //                $('#TagsArea').append($("<option></option>").attr("value", "option" + myNode['children'][ww]['name']).text(myNode['children'][ww]['name']));
-                $('#TagsArea').multiSelect('addOption', {value: "option" + myNode['children'][ww]['name'], text: myNode['children'][ww]['name'], index: 0, nested: 'Keywords'});
+                $('#TagsArea').multiSelect('addOption', {value: "Keywords|" + myNode['children'][ww]['name'], text: myNode['children'][ww]['name'], index: 0, nested: 'Keywords'});
             }
 //            防止有重複的tags
             var found = [];

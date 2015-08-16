@@ -1,3 +1,19 @@
+.btn-apply {
+    margin-top: 3px;
+    color: #fff;
+    background-color: #2E4272;
+    border-color: #2E4272;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.btn-apply:hover, .btn-apply:focus, .btn-apply:active, .btn-apply.active, .open > .dropdown-toggle.btn-apply {
+    color: #98EB18;background-color: #2E4272;border-color: #98EB18;
+}
+
+.btn-apply:active, .btn-apply.active {
+    color: #fff;background-color: #2E4272;border-color: #2E4272;
+    box-shadow: none;
+}
 /*------------------tweets list css---------------------*/
 .panel-info>.panel-heading {
     color: #fff;

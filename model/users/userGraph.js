@@ -73,7 +73,7 @@ $(document).ready(function () {
 //                        var web = "http://twitter.com/" + lb;
 //                        window.open(web, lb, config = 'height=500,width=600');
 //                        $('#TagsArea').append($("<option></option>").attr("value", "option" + lb).text(lb));
-                        $('#TagsArea').multiSelect('addOption', {value: "option"+lb, text: lb, index: 0, nested: 'Users'});
+                        $('#TagsArea').multiSelect('addOption', {value: "Users|"+lb, text: lb, index: 0, nested: 'Users'});
                         var found = [];
                         $("#TagsArea option").each(function () {
                             if ($.inArray(this.value, found) !== -1)

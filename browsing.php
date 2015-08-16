@@ -39,10 +39,10 @@
                                 right: 0;*/
                 height: 460px;
             }
-            #well2 {
-                margin-bottom: 0;
-                border-color:#2E4272
-            }
+            /*            #well2 {
+                            margin-bottom: 0;
+                            border-color:#2E4272
+                        }*/
             //----usergraph filter----//
             #control-pane {
                 top: 10px;
@@ -180,10 +180,16 @@
                                 <optgroup label="Users"></optgroup>
                                 <optgroup label="Nouns"></optgroup>
                             </select>
+                            <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply!</button>
                             <script>
                                 $('#TagsArea').multiSelect({
-                                    selectableHeader: "<div class='TagsArea'>Selected tags</div>",
-                                    selectionHeader: "<div class='TagsArea'>Applied tagss</div>",
+                                    selectableHeader: "<div class='TagsArea'>Selectable tags</div>",
+                                    selectionHeader: "<div class='TagsArea'>Selected tagss</div>"
+                                });
+                                $("button[name='btn_apply']").click(function () {
+                                    var tags = $('select#TagsArea').val();
+                                    console.log(tags);
+                                    parseTags(tags);
                                 });
                             </script>
                         </div>
@@ -206,7 +212,7 @@
                                     <li><a href="#tab4primary" data-toggle="tab">Noun Co-word</a></li>
                                 </ul>
                             </div>
-                            <div class="panel-body" style="height: 500px; padding: 2px;">
+                            <div class="panel-body" style="padding: 2px;">
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="tab1primary">
                                         <div id="timeChart" style="overflow-y: hidden; overflow-x:auto;"></div>

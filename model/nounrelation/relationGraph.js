@@ -65,7 +65,7 @@ $(document).ready(function () {
 
         $("button[name='add-tags-noun']").click(function () {
             for (var nn in NowNodes) {
-                $('#TagsArea').multiSelect('addOption', {value: "option" + NowNodes[nn]['label'], text: NowNodes[nn]['label'], index: 0, nested: 'Nouns'});
+                $('#TagsArea').multiSelect('addOption', {value: "Nouns|" + NowNodes[nn]['label'], text: NowNodes[nn]['label'], index: 0, nested: 'Nouns'});
 //                $('#TagsArea').append($("<option></option>").attr("value", "option" + NowNodes[nn]['label']).text(NowNodes[nn]['label']));
 //                $('#TagsArea').multiSelect('refresh');
             }
