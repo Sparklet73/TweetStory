@@ -9,12 +9,12 @@
         <link rel="stylesheet" href="jquery/multiselect/multi-select.css" type="text/css" />
         <link href="bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
+        <script src="addNewTags.js"></script>
         <script src="tweetParser/jquery.tweetParser.min.js"></script>
         <script src="linkurious/build/sigma.require.js"></script>
         <script src="linkurious/build/plugins/sigma.parsers.json.min.js"></script>
         <script src="linkurious/build/plugins/sigma.plugins.neighborhoods.min.js"></script>
         <script src="linkurious/build/plugins/sigma.plugins.filter.min.js"></script>
-        <script src="addNewTags.js"></script>
         <script src="model/nounrelation/relationGraph.js"></script>
         <script src="model/users/userGraph.js"></script>
         <script src="model/users/filterUsers.js"></script>
@@ -138,58 +138,13 @@
                     <ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>
                 </div>
                 <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;">
-                    <div class="row">
+                    <div class="row" id="tweetsDisplay">
                         <div class="panel panel-info">
-                            <p class="user">chenkang888：</p><br>
+                            <p class="tweet_user">chenkang888</p><p class="tweet_time"> 2014/08/04 12:12:12 </p><br>
                             <p class="tweet">
-                                刘植荣：【香港“反占中”游行花钱雇佣参与者】印佣组织发言人表示，有雇主要求她们交出身分证号码，并在表格上签名，因外佣不懂中文，所以不知表格的用意。会员被游说参加八一七游行，并称可提供200至300元酬劳，而说客称游行是为了香港的和平及繁荣，但没有详细解释原因
+                                @abc12 刘植荣：【香港“反占中”游行花钱雇佣参与者】印佣组织发言人表示，有雇主要求她们交出身分证号码，并在表格上签名，因外佣不懂中文，所以不知表格的用意。会员被游说参加八一七游行，并称可提供200至300元酬劳，而说客称游行是为了香港的和平及繁荣，但没有详细解释原因
                             </p>
-                            <p style="text-align: right;"> 2014/08/04 12:12:12 </p>
-                            <a href="#" id="comments">Insert memo!</a>
-                            <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
-                        </div>
-                        <div class="panel panel-info">
-                            <p class="user">chenkang888：</p><br>
-                            <p class="tweet">
-                                香港“佔中公投”闹剧（七）---七一游行国家不可能让步 http://t.co/L6tm75o61W 香港昨天再次上演“七一大游行”，人数据称超过往年，但各方统计差距很大。反对派很高兴，认为今年的游行和之前的“公投”叠加了...
-                            </p>
-                            <p style="text-align: right;"> 2014/08/04 12:12:12 </p>
-                            <a href="#" id="comments">Insert memo!</a>
-                            <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
-                        </div>
-                        <div class="panel panel-info">
-                            <p class="user">chenkang888：</p><br>
-                            <p class="tweet">
-                                被土共指定并养熟的狗，拼命咬港人，它凭什么代表香港“@icablenews: 【范太狠批戴耀廷佔中累港人】人大常委范徐麗泰批評，佔中會影響香港政局和經濟穩定，又說中央面對佔中脅迫，只會更堅定。... http://t.co/RtSaKEmJWj”
-                            </p>
-                            <p style="text-align: right;"> 2014/08/04 12:12:12 </p>
-                            <a href="#" id="comments">Insert memo!</a>
-                            <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
-                        </div>
-                        <div class="panel panel-info">
-                            <p class="user">chenkang888：</p><br>
-                            <p class="tweet">
-                                給想要真普選的我和你 (1)："If you don't like what's being said, change the conversation." | red child | 香港獨立媒體
-                            </p>
-                            <p style="text-align: right;"> 2014/08/04 12:12:12 </p>
-                            <a href="#" id="comments">Insert memo!</a>
-                            <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
-                        </div>
-                        <div class="panel panel-info">
-                            <p class="user">chenkang888：</p><br>
-                            <p class="tweet">
-                                RT @cbazhengenchong: 香港占中行动发起人戴耀廷称正考虑行动细节 http://t.co/V2Zqybm3xy 中共高层已表明，在香港政改问题上不妥协、不让步的态度，就看习近平如何拍板了。港民占领中环、罢课等一系列的抗议活动已不可避免，正在考虑细节。内地的镇压…
-                            </p>
-                            <p style="text-align: right;"> 2014/08/04 12:12:12 </p>
-                            <a href="#" id="comments">Insert memo!</a>
-                            <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
-                        </div>
-                        <div class="panel panel-info">
-                            <p class="user">chenkang888：</p><br>
-                            <p class="tweet">
-                                不止不止。RT @QIAOFU88: 十八大以来，山西省委常委会十三人中，已经有五人被查，占省常委的38.5%.如果再加上曾任太原市委书记申维辰，则已经超过46%.而据消息可靠人士透露，还会有至少一名常委肯定还会下马。这样就是说，至少有一半是贪官污吏。山西如此，其它地区难道不是
-                            </p>
-                            <p style="text-align: right;"> 2014/08/04 12:12:12 </p>
+                            <p class="rtcnt">retweet</p>
                             <a href="#" id="comments">Insert memo!</a>
                             <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
                         </div>
@@ -207,18 +162,16 @@
                     </div>                        
                 </div>
             </div>
-
         </div>
         <script type="text/javascript">
             $(".tweet").tweetParser({
                 urlClass: "tweet_link", //this is default
-                userClass: "tweet_user", //this is default
+                userClass: "tweet_mention", //this is default
                 hashtagClass: "hashtag", //this is default
                 target: "_blank", //this is default
                 searchWithHashtags: true
             });
         </script>
-
 
         <div class="col-md-3">
             <div class="row">

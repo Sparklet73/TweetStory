@@ -1,4 +1,4 @@
-.tweet_link, .tweet_user, footer a:hover {
+.tweet_link, .tweet_mention, footer a:hover {
     text-decoration: none
 }
 a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul,
@@ -53,5 +53,8 @@ footer a, footer a:hover {color: #3498db}
 .tweet-container {height: 560px;}
 .tweet-container .row>div{padding:12px;margin-bottom:5px;border:0px solid #2E4272;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);border-radius: 3px}
 .tweet-container h2 {color: #34495e;padding-bottom:15px}.tweet_link{color:#1abc9c}
-.tweet_user {color: #3947cc}
+.tweet_mention {color: #3947cc}
 .hashtag{color:#f39c12}
+.tweet_time{color:#7e7e7e;text-align:right;}
+.tweet_user{color: #00aced;text-align: left;font-size: 16px;font-weight: bold;float:left;}
+.rtcnt{text-align: right;}
