@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="jquery/multiselect/multi-select.css" type="text/css" />
         <link href="bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
+        <script src="bootstrap-slider/bootstrap-slider.min.js"></script>
+        <link rel="stylesheet" href="bootstrap-slider/bootstrap-slider.min.css" type="text/css" />
         <script src="addNewTags.js"></script>
         <script src="tweetParser/jquery.tweetParser.min.js"></script>
         <script src="linkurious/build/sigma.require.js"></script>
@@ -103,6 +105,26 @@
                 pointer-events: none;
             }
             //----keywordsGraph 設定 結束-----
+            //----bootstrap Tags slider 設定 開始-----
+            #well .b {
+                width: auto;
+            }
+            #timeSlider .slider-selection, #timeSlider .slider-handle{
+                background: #ED3C3C;
+            }
+            #keywordsSlider .slider-selection, #keywordsSlider .slider-handle{
+                background: #A6DE38;
+            }
+            #usersSlider .slider-selection, #usersSlider .slider-handle{
+                background: #248E8E;
+            }
+            #nounsSlider .slider-selection, #nounsSlider .slider-handle{
+                background: #FFC600;
+            }
+            #timeSlider, #keywordsSlider, #usersSlider, #nounsSlider{
+                width: 150px;
+            }
+            //----bootstrap Tags slider 設定 結束-----
         </style>
     </head>
 
@@ -176,6 +198,21 @@
         <div class="col-md-3">
             <div class="row">
                 <h2>Tags</h2>
+                <b style="color:#A9A9A9;">Adjust weights for 4 tags.</b>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-8"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
+                        <div class="col-md-4" style="font-size:15px;">Keywords</div> <div class="col-md-8"><input id="keywordsSlider" data-slider-id='keywordsSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
+                        <div class="col-md-4" style="font-size:15px;">Users</div> <div class="col-md-8"><input id="usersSlider" data-slider-id='usersSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
+                        <div class="col-md-4" style="font-size:15px;">Nouns</div> <div class="col-md-8"><input id="nounsSlider" data-slider-id='nounsSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
+                    </div>
+                </div>
+                <script>
+                    $('#timeSlider').bootstrapSlider({});
+                    $('#keywordsSlider').bootstrapSlider({});
+                    $('#usersSlider').bootstrapSlider({});
+                    $('#nounsSlider').bootstrapSlider({});
+                </script>
                 <select id='TagsArea' multiple='multiple'>
                     <optgroup label="Time"></optgroup>
                     <optgroup label="Keywords"></optgroup>
