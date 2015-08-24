@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var margin = 5,
             width = 500,
-            height = 445;
+            height = 345;
 //            diameter = 445;
 
     var color = d3.scale.linear()
