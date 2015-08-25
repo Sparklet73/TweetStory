@@ -61,7 +61,7 @@ $(document).ready(function () {
             refreshGraph(nodeId);
 //            var nodeLabel = event.data.node.label;
             NowNodes = db.neighborhood(nodeId).nodes;
-            showNumOfTweets(NowNodes);
+            NounShowNumOfTweets(NowNodes);
         });
 
         $("button[name='add-tags-noun']").click(function () {

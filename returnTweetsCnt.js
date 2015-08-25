@@ -50,7 +50,8 @@ function TweetsCount(arrData) {
     });
 }
 
-function showNumOfTweets(aryLists) {
+/*relation Graph*/
+function NounShowNumOfTweets(aryLists) {
     var jObject = {};
     for (var v in aryLists) {
         jObject[v] = aryLists[v].label;
@@ -60,7 +61,7 @@ function showNumOfTweets(aryLists) {
         cache: false
     });
 
-    var jqxhr = $.getJSON('ajax_returnTweetsCnt.php', {
+    var jqxhr = $.getJSON('ajax_NounReturnTweetsCnt.php', {
         nounsAry: jObject
     });
 
@@ -75,6 +76,30 @@ function showNumOfTweets(aryLists) {
             TweetsCount(arr);
         } else {
             showMessage('danger', data.rsDate);
+        }
+    });
+}
+
+/*user Graph*/
+function UserShowNumOfTweets(strUser) {
+    $.ajaxSetup({
+        cache: false
+    });
+    
+    var jqxhr = $.getJSON('ajax_UserReturnTweetsCnt.php', {
+        su: strUser
+    });
+    
+    jqxhr.done(function (data) {
+        if (data.rsStat) {
+            var arr = [];
+            $.each(data.rsUser, function (index, val) {
+                var mydate = val.dd.split("/");
+                arr.push([Date.UTC(parseInt(mydate[0]), parseInt(mydate[1])-1, parseInt(mydate[2])), parseInt(val.cnt)]);
+            });
+            TweetsCount(arr);
+        } else {
+            showMessage('danger', data.rsUser);
         }
     });
 }
