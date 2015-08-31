@@ -19,7 +19,8 @@ $(document).ready(function () {
             yAxis: {
                 title: {
                     text: 'Number of tweets'
-                }
+                },
+                min: 0
             },
             legend: {
                 enabled: false

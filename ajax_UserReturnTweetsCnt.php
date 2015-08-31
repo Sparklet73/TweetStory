@@ -15,8 +15,8 @@ try {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT DATE_FORMAT(`created_at`, '%Y/%m/%d') dd, count(*) cnt
-            FROM `HKALLzh_main` 
-            WHERE `from_user_name` LIKE '" . $strUser . "' GROUP BY dd";
+            FROM `HKALLzh_mentions` 
+            WHERE `to_user` LIKE '" . $strUser . "' GROUP BY dd";
 
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
