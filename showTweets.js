@@ -1,11 +1,11 @@
 function parseTags(aryLists, tv, kv, uv, nv) {
+    console.log(tv,kv,uv,nv);
     var jObject = {};
     var arrTime = [];
     var arrKeywords = [];
     var arrUsers = [];
     var arrNouns = [];
     for (var s in aryLists) {
-//        console.log(aryLists[s]);
         ps = aryLists[s].split('|');
         switch (ps[0]) {
             case "Time":
@@ -50,6 +50,7 @@ function parseTags(aryLists, tv, kv, uv, nv) {
     jqxhr.done(function (data) {
         if (data.rsStat) {
             var arr = [];
+            $('#tweetsDisplay').html("");
             $.each(data.rsTweet, function (index, val) {
                 $('#tweetsDisplay').append(makeTweetContent(index, val.created_at, val.from_user_name, val.text, val.retweet_cnt, val.tags));
             });
@@ -70,7 +71,18 @@ function makeTweetContent(tid, time, user, content, rtcount, tags) {
     rtn_content += '<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>';
     var tagList = tags.split('/');
     for (var t in tagList) {
-        rtn_content += '<span class="label greyTag" style="margin-left:2px;margin-right:2px;">' + tagList[t] + '</span>';
+        rtn_content += '<span class="label ';
+        var tword = tagList[t].split('|');
+        if (tword[0] == "t") {
+            rtn_content += 'timeTag';
+        } else if (tword[0] == "k") {
+            rtn_content += 'keywordsTag';
+        } else if (tword[0] == "u") {
+            rtn_content += 'usersTag';
+        } else if (tword[0] == "n") {
+            rtn_content += 'nounsTag';
+        }
+        rtn_content += '" style="margin-left:2px;margin-right:2px;">' + tword[1] + '</span>';
     }
     rtn_content += '</div>';
     return rtn_content;

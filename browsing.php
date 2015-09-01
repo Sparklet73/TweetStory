@@ -11,9 +11,11 @@
         <script src="bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
         <script src="bootstrap-slider/bootstrap-slider.min.js"></script>
         <link rel="stylesheet" href="bootstrap-slider/bootstrap-slider.min.css" type="text/css" />
+        <script src="nprogress/nprogress.js"></script>
+        <link rel="stylesheet" href="nprogress/nprogress.css" type="text/css" />
         <script src="highcharts/highcharts.js"></script>
         <script src="returnTweetsCnt.js"></script>
-        <script src="addNewTags.js"></script>
+        <script src="showTweets.js"></script>
         <script src="tweetParser/jquery.tweetParser.min.js"></script>
         <script src="linkurious/build/sigma.require.js"></script>
         <script src="linkurious/build/plugins/sigma.parsers.json.min.js"></script>
@@ -110,20 +112,20 @@
             #well .b {
                 width: auto;
             }
-            #timeSlider .slider-selection, #timeSlider .slider-handle{
-                background: #ED3C3C;
-            }
-            #keywordsSlider .slider-selection, #keywordsSlider .slider-handle{
-                background: #A6DE38;
-            }
-            #usersSlider .slider-selection, #usersSlider .slider-handle{
-                background: #248E8E;
-            }
-            #nounsSlider .slider-selection, #nounsSlider .slider-handle{
+            #timeSlider .slider-selection, #timeSlider .slider-handle, .timeTag{
                 background: #FFC600;
             }
+            #keywordsSlider .slider-selection, #keywordsSlider .slider-handle, .keywordsTag{
+                background: #A6DE38;
+            }
+            #usersSlider .slider-selection, #usersSlider .slider-handle, .usersTag{
+                background: #248E8E;
+            }
+            #nounsSlider .slider-selection, #nounsSlider .slider-handle, .nounsTag{
+                background: #ED3C3C;
+            }
             #timeSlider, #keywordsSlider, #usersSlider, #nounsSlider{
-                width: 150px;
+                width: 130px;
             }
             //----bootstrap Tags slider 設定 結束-----
         </style>
@@ -158,30 +160,33 @@
             <div class="col-md-4">
                 <div class="row">
                     <h2>Tweets Display Area</h2>
-                    <ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>
+                    <!--<ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>-->
                 </div>
-                <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;">
+                <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;background-color: #fff;">
                     <div class="row" id="tweetsDisplay">
-                        <div class="panel panel-info">
-                            <p class="tweet_user">chenkang888</p><p class="tweet_time"> 2014/08/04 12:12:12 </p><br>
-                            <p class="tweet">
-                                @abc12 刘植荣：【香港“反占中”游行花钱雇佣参与者】印佣组织发言人表示，有雇主要求她们交出身分证号码，并在表格上签名，因外佣不懂中文，所以不知表格的用意。会员被游说参加八一七游行，并称可提供200至300元酬劳，而说客称游行是为了香港的和平及繁荣，但没有详细解释原因
-                            </p>
-                            <p class="rtcnt">retweet</p>
-                            <a href="#" id="comments">Insert memo!</a>
-                            <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
-                        </div>
-                        <script>
-                            $(function () {
-                                $('#comments').editable({
-                                    type: 'textarea',
-                                    pk: 1,
-                                    name: 'comments',
-                                    url: 'post.php',
-                                    title: 'Enter comments'
-                                });
-                            });
-                        </script>
+                        <!--                        <div class="panel panel-info">
+                                                    <p class="tweet_user">chenkang888</p><p class="tweet_time"> 2014/08/04 12:12:12 </p><br>
+                                                    <p class="tweet">
+                                                        @abc12 刘植荣：【香港“反占中”游行花钱雇佣参与者】印佣组织发言人表示，有雇主要求她们交出身分证号码，并在表格上签名，因外佣不懂中文，所以不知表格的用意。会员被游说参加八一七游行，并称可提供200至300元酬劳，而说客称游行是为了香港的和平及繁荣，但没有详细解释原因
+                                                    </p>
+                                                    <p class="rtcnt">retweet</p>
+                                                    <a href="#" id="comments">Insert memo!</a>
+                                                    <a class="btn icon-btn btn-collect" href="#"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>
+                                                    <span class="label nounsTag">
+                                                        梁振英
+                                                    </span>
+                                                </div>-->
+                        <!--                        <script>
+                                                    $(function () {
+                                                        $('#comments').editable({
+                                                            type: 'textarea',
+                                                            pk: 1,
+                                                            name: 'comments',
+                                                            url: 'post.php',
+                                                            title: 'Enter comments'
+                                                        });
+                                                    });
+                                                </script>-->
                     </div>                        
                 </div>
             </div>
@@ -202,34 +207,51 @@
                 <b style="color:#A9A9A9;">Adjust weights for 4 tags.</b>
                 <div class="well">
                     <div class="row">
-                        <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-8"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
-                        <div class="col-md-4" style="font-size:15px;">Keywords</div> <div class="col-md-8"><input id="keywordsSlider" data-slider-id='keywordsSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
-                        <div class="col-md-4" style="font-size:15px;">Users</div> <div class="col-md-8"><input id="usersSlider" data-slider-id='usersSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
-                        <div class="col-md-4" style="font-size:15px;">Nouns</div> <div class="col-md-8"><input id="nounsSlider" data-slider-id='nounsSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.1" data-slider-value="1" data-slider-tooltip="hide"/></div>
+                        <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-6"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="timeSliderVal">1</span></div> 
+                        <div class="col-md-4" style="font-size:15px;">Keywords</div> <div class="col-md-6"><input id="keywordsSlider" data-slider-id='keywordsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="keywordsSliderVal">1</span></div> 
+                        <div class="col-md-4" style="font-size:15px;">Users</div> <div class="col-md-6"><input id="usersSlider" data-slider-id='usersSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="usersSliderVal">1</span></div> 
+                        <div class="col-md-4" style="font-size:15px;">Nouns</div> <div class="col-md-6"><input id="nounsSlider" data-slider-id='nounsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="nounsSliderVal">1</span></div> 
                     </div>
                 </div>
-                <script>
-                    $('#timeSlider').bootstrapSlider({});
-                    $('#keywordsSlider').bootstrapSlider({});
-                    $('#usersSlider').bootstrapSlider({});
-                    $('#nounsSlider').bootstrapSlider({});
-                </script>
                 <select id='TagsArea' multiple='multiple'>
                     <optgroup label="Time"></optgroup>
                     <optgroup label="Keywords"></optgroup>
                     <optgroup label="Users"></optgroup>
                     <optgroup label="Nouns"></optgroup>
                 </select>
-                <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply!</button>
+                <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply</button>
                 <script>
+                    var tv=1, kv=1, uv=1, nv=1;
+                    $('#timeSlider').bootstrapSlider({});
+                    $("#timeSlider").on("slide", function (slideEvt) {
+                        $("#timeSliderVal").text(slideEvt.value);
+                        tv = slideEvt.value;
+                    });
+                    $('#keywordsSlider').bootstrapSlider({});
+                    $("#keywordsSlider").on("slide", function (slideEvt) {
+                        $("#keywordsSliderVal").text(slideEvt.value);
+                        kv = slideEvt.value;
+                    });
+                    $('#usersSlider').bootstrapSlider({});
+                    $("#usersSlider").on("slide", function (slideEvt) {
+                        $("#usersSliderVal").text(slideEvt.value);
+                        uv = slideEvt.value;
+                    });
+                    $('#nounsSlider').bootstrapSlider({});
+                    $("#nounsSlider").on("slide", function (slideEvt) {
+                        $("#nounsSliderVal").text(slideEvt.value);
+                        nv = slideEvt.value;
+                    });
+
                     $('#TagsArea').multiSelect({
                         selectableHeader: "<div class='TagsArea'>Selectable tags</div>",
                         selectionHeader: "<div class='TagsArea'>Selected tags</div>"
                     });
                     $("button[name='btn_apply']").click(function () {
+                        NProgress.start();
                         var tags = $('select#TagsArea').val();
-                        console.log(tags);
-                        parseTags(tags);
+//                        console.log(tags + tv + kv + uv + nv);
+                        parseTags(tags, tv, kv, uv, nv);
                     });
                 </script>
             </div>
@@ -295,7 +317,7 @@
                 </div>
             </div>
             <div class="row" style="margin-top: 8px;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);border-radius:3px;border-color: #ccc;">
-                <div id="showTweetsFreq" style="min-width: 310px; height: 140px;border-color: #ccc;"></div>
+                <div id="showTweetsFreq" style="min-width: 310px; height: 120px;border-color: #ccc;"></div>
             </div>
         </div>
 

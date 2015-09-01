@@ -28,7 +28,15 @@ if (!$intTimeW || !$intKeywordsW || !$intUsersW || !$intNounsW) {
 try {
     $dbh = new PDO("mysql:host=$hostname;dbname=$database;charset=utf8", $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+//
+//    $sql_write = 'INSERT INTO `HKALLzh_history`(`historyID`, `userID`, `applied_at`, `time`, `time_w`, '
+//                . '`keywords`, `keywords_w`, `users`, `users_w`, `nouns`, `nouns_w`, `tweetsId`'
+//                . 'VALUES (NULL, :userID, :applied_at, :Latitude, :Longitude)';
+//    $history = $dbh->prepare($sql_write);
+//    if($history) {
+//        $history->bindParam(':userID', $sql_write);
+//    }
+//    
     $tweetScore = array();
     $tweetTags = array();
     foreach ($arrTweetList as $key => $value) {
@@ -40,10 +48,10 @@ try {
                 while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if (array_key_exists($arrQue['id'], $tweetScore)) {
                         $tweetScore[$arrQue['id']] += $intTimeW;
-                        $tweetTags[$arrQue['id']] .= "/" . $v;
+                        $tweetTags[$arrQue['id']] .= "/t|" . $v;
                     } else {
                         $tweetScore[$arrQue['id']] = $intTimeW;
-                        $tweetTags[$arrQue['id']] = $v;
+                        $tweetTags[$arrQue['id']] = "t|" . $v;
                     }
                 }
             }
@@ -56,10 +64,10 @@ try {
                 while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if (array_key_exists($arrQue['id'], $tweetScore)) {
                         $tweetScore[$arrQue['id']] += $intKeywordsW;
-                        $tweetTags[$arrQue['id']] .= "/" . $v;
+                        $tweetTags[$arrQue['id']] .= "/k|" . $v;
                     } else {
                         $tweetScore[$arrQue['id']] = $intKeywordsW;
-                        $tweetTags[$arrQue['id']] = $v;
+                        $tweetTags[$arrQue['id']] = "k|" . $v;
                     }
                 }
             }
@@ -72,10 +80,10 @@ try {
                 while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if (array_key_exists($arrQue['id'], $tweetScore)) {
                         $tweetScore[$arrQue['id']] += $intUsersW;
-                        $tweetTags[$arrQue['id']] .= "/" . $v;
+                        $tweetTags[$arrQue['id']] .= "/u|" . $v;
                     } else {
                         $tweetScore[$arrQue['id']] = $intUsersW;
-                        $tweetTags[$arrQue['id']] = $v;
+                        $tweetTags[$arrQue['id']] = "u|" . $v;
                     }
                 }
             }
@@ -88,10 +96,10 @@ try {
                 while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if (array_key_exists($arrQue['id'], $tweetScore)) {
                         $tweetScore[$arrQue['id']] += $intNounsW;
-                        $tweetTags[$arrQue['id']] .= "/" . $v;
+                        $tweetTags[$arrQue['id']] .= "/n|" . $v;
                     } else {
                         $tweetScore[$arrQue['id']] = $intNounsW;
-                        $tweetTags[$arrQue['id']] = $v;
+                        $tweetTags[$arrQue['id']] = "n|" . $v;
                     }
                 }
             }
