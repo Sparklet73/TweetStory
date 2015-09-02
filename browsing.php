@@ -69,7 +69,6 @@
             }
             h2, h3, h4 {
                 padding: 0;
-                font-variant: small-caps;
             }
             .green {
                 color: #437356;
@@ -220,8 +219,19 @@
                     <optgroup label="Nouns"></optgroup>
                 </select>
                 <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply</button>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Explore story models to get some tags.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <script>
-                    var tv=1, kv=1, uv=1, nv=1;
+                    var userID = 0; //for test using.
+                    var tv = 1, kv = 1, uv = 1, nv = 1;
                     $('#timeSlider').bootstrapSlider({});
                     $("#timeSlider").on("slide", function (slideEvt) {
                         $("#timeSliderVal").text(slideEvt.value);
@@ -249,9 +259,22 @@
                     });
                     $("button[name='btn_apply']").click(function () {
                         NProgress.start();
+                        var current = new Date();
+                        //format: 2015/9/2 14:42:8
+                        var strDatetime = current.getFullYear() + "/"
+                                + (current.getMonth() + 1) + "/"
+                                + current.getDate() + " "
+                                + current.getHours() + ":"
+                                + current.getMinutes() + ":"
+                                + current.getSeconds();
                         var tags = $('select#TagsArea').val();
-//                        console.log(tags + tv + kv + uv + nv);
-                        parseTags(tags, tv, kv, uv, nv);
+                        if (tags === null) {
+                            $('#myModal').modal('show');
+                            NProgress.done();
+                        } else {
+                            //console.log(tags + tv + kv + uv + nv);
+                            parseTags(userID, strDatetime, tags, tv, kv, uv, nv);
+                        }
                     });
                 </script>
             </div>

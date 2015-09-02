@@ -1,4 +1,4 @@
-function parseTags(aryLists, tv, kv, uv, nv) {
+function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
     console.log(tv,kv,uv,nv);
     var jObject = {};
     var arrTime = [];
@@ -40,6 +40,8 @@ function parseTags(aryLists, tv, kv, uv, nv) {
     });
 
     var jqxhr = $.getJSON('ajax_showtweets.php', {
+        uID: userID,
+        dtime: strDatetime,
         tweetTags: jObject,
         timew: tv,
         keywordsw: kv,
