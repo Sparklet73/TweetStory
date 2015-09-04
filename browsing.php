@@ -26,8 +26,6 @@
         <script src="model/users/filterUsers.js"></script>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="tweetParser/css/tweetParser.css" type="text/css" />
-        <link href="editable/css/bootstrap-editable.css" rel="stylesheet">
-        <script src="editable/js/bootstrap-editable.js"></script>
         <script src="d3/d3.min.js"></script>
         <script src="model/keywords/keywordsGraph.js"></script>
         <script src="model/time/timeChart.js"></script>
@@ -204,7 +202,7 @@
             <div class="row">
                 <h2>Tags</h2>
                 <b style="color:#A9A9A9;">Adjust weights for 4 tags.</b>
-                <div class="well">
+                <div class="well" style="padding:15px;">
                     <div class="row">
                         <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-6"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="timeSliderVal">1</span></div> 
                         <div class="col-md-4" style="font-size:15px;">Keywords</div> <div class="col-md-6"><input id="keywordsSlider" data-slider-id='keywordsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="keywordsSliderVal">1</span></div> 
@@ -343,55 +341,6 @@
                 <div id="showTweetsFreq" style="min-width: 310px; height: 120px;border-color: #ccc;"></div>
             </div>
         </div>
-
-
-        <!--                <h2>History</h2>
-                        <div class="row" style="overflow-x: hidden; overflow-y:auto; height: 120px;">
-                            <div class="well" id="well2">
-                                <div class="list-group"> 
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">#滕彪 李克强：推销中国高铁我特别有底气 - 　　8月22日，李克强考察中国铁路总公司，他在铁路运输...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">RT @siutopoon: 何姨姨就是用這份中共喉舌於１９４４年２月日的社論，秒殺李飛的！且看中共當年如何狠批有篩選的假普選！ http://t.co/35tZa568EB</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">同行的Vivian 遇上一位北京人，北京人說不會到香港，因為香港有佔中。至少，知道佔中。</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">戴耀廷回应李飞：人大作不合理决定即发动占中 http://t.co/hoauI5p4cC</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">「由原燒看台灣人的民族性?」不得不說我非常認同・・・日本能夠在服務業打著客人至上的原則，那無非是有素養高的國民在背後支撐。而我認為這套原則在台灣的服務業中未必是全面適用，到頭來只會淪為消費者占小便宜的說詞罷了。</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <p class="list-group-item-text">Some text...</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>-->
-
     </div>
 </body>
 </html>

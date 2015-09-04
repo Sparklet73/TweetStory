@@ -7,6 +7,7 @@
         <script src="jquery/jquery-ui.min.js"></script>
         <link href="bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
+        <!--<link href="tweetParser/css/tweetParser.css" rel="stylesheet" type="text/css" />-->
         <!--<link href="summernote/font-awesome.min.css" rel="stylesheet">-->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
         <script src="summernote/summernote.min.js"></script>
@@ -39,7 +40,7 @@
         </style>
     </head>
     <body>
-        <div class="mywindow" style="width:1366px; margin:0 auto;">
+        <div class="mywindow" style="margin:0 auto;">
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
