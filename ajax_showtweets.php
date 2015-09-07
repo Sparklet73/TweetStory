@@ -125,6 +125,7 @@ try {
         }
     }
 
+//    write history record
     $sql_write = 'INSERT INTO `HKALLzh_history`(`historyID`, `userID`, `applied_at`, `time`, `time_w`, '
             . '`keywords`, `keywords_w`, `users`, `users_w`, `nouns`, `nouns_w`, `set_tweetsID`) '
             . 'VALUES (NULL, :userID, :applied_at, :time, :time_w, '
@@ -145,6 +146,7 @@ try {
         $history->execute();
     }
 
+//    return tweets to tweets display area
     $sql = "SELECT `id`, `from_user_name`, `created_at`, `text`, `retweet_count` 
             FROM `HKALLzh_main` 
             WHERE `id` IN (" . implode(',', array_keys($arrResult['rsTweet'])) . ")";

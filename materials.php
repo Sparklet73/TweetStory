@@ -1,3 +1,27 @@
+<?php
+require_once 'config.php';
+
+$intUID = (int) filter_input(INPUT_GET, 'uID', FILTER_SANITIZE_NUMBER_INT);
+
+
+try {
+    $dbh = new PDO("mysql:host=$hostname;dbname=$database;charset=utf8", $dbuser, $dbpass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT `HKALLzh_main`.`text` "
+            . "FROM `HKALLzh_materials`, `HKALLzh_main` "
+            . "WHERE `userID` = " . $intUID . " AND `HKALLzh_main`.`id` = `HKALLzh_materials`.`tweetID`";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+
+    $materialContent = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+    $arrResult['rsStat'] = false;
+    $arrResult['rsRes'] = $ex->getMessage();
+} catch (Exception $exc) {
+    echo $exc->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,8 +38,13 @@
         <link href="summernote/summernote.css" rel="stylesheet" />
         <script src="draggable/jquery-sortable-min.js"></script>
         <link href="draggable/application.css" rel="stylesheet"/>
+        <script src="doMaterial.js"></script>
+        <script src="tag-it/js/tag-it.min.js"></script>
+        <link href="tag-it/css/jquery.tagit.css" rel="stylesheet"/>
+        <link href="tag-it/css/tagit.ui-zendesk.css" rel="stylesheet"/>
         <style type="text/css">
             body, html {
+                background-image: url('img/page-background.png');
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
                 //overflow: hidden; //no scrollable bar
             }
@@ -36,7 +65,35 @@
                 position: absolute;
                 /** Define arrowhead **/
             }
-
+            .tagsbox{
+                background-color: #fff;
+                border: 1px solid #ccc;
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                padding: 4px 6px;
+                margin-top: 5px;
+                margin-bottom: 10px;
+                color: #555;
+                vertical-align: middle;
+                border-radius: 4px;
+                max-width: 100%;
+                line-height: 22px;
+                cursor: text;
+            }
+            .timeTag{
+                background: #FFC600;
+            }
+            .keywordsTag{
+                background: #A6DE38;
+            }
+            .usersTag{
+                background: #248E8E;
+            }
+            .nounsTag{
+                background: #ED3C3C;
+            }
+            #materialBox .li {
+                background-color: #fff;
+            }
         </style>
     </head>
     <body>
@@ -66,20 +123,23 @@
                 </div> <!-- /.container-fluid -->
             </nav>
             <div class="col-md-8">
-                <div class="row">                            
-                    <div class="col-md-4">
+                <div class="row">  
+                    <div class="col-md-4" id="materialBox">
                         <h4>Materials Box</h4>
-                        <ol class="simple_with_animation vertical">
-                            <li>RT @wangdan1989: 我們決定：一旦中共悍然武力鎮壓佔中行動，我們將立即在全世界範圍內，...</li>                                  
-                            <li>RT @inmediahk: 【佔中即時】(20:00)學聯副秘書長岑敖暉表示，今天不是香港最黑暗的一天，因為今天只是把香港帶去了另一階段，因為接下來只會有更多的不合作運動和抗爭，不再單單是上街和投票。他又重申，極權的中共可以抹殺政制，但不能抹殺香港人爭取民... http:/…</li>
-                            <li>在大雨中的佔中集會，心情極度沉重。朋友們，我們已經無路可退了。為我們的孩子，為我們的未來，我們不能認輸，一起公民抗命，一起佔領中環吧。</li>
-                            <li>"@nytchinese: 周五夜间，香港“占中”组织成员在中环政府合署外集会，呼吁民主选举。《苹果...</li>
-                            <li>全中国都看着香港占中发展！</li>
-                            <li>@dingyi777 反對佔中，反對危害，反對盜竊，反對弄虛作假..希望廉署給廣大市民一個交代......</li>
+                        <ol class="simple_with_animation vertical" style="height:560px;overflow-y:scroll;">
+                            <?php
+                            foreach ($materialContent as $content) {
+                                echo "<li>" . $content['text'] . "</li>";
+                            }
+                            ?>
                         </ol>
                     </div>
+<!--                    <script>
+                        showMaterial(0);
+                    </script>-->
                     <div class="col-md-4">
-                        <input type="text" class="span6" align= "text-center" placeholder="Subject" style="margin-bottom: 10px;">
+                        <ul id="singleFieldTags"></ul>
+                        <!--<input type="text" class="span6" align= "text-center" placeholder="Group some tags..." style="margin-bottom: 10px;">-->
                         <ol class="simple_with_animation vertical">
                             <li>新華社評論員：一旦佔中發生香港將不得安寧 http://t.co/t9NxlXFWrt</li>
                             <li>齊鵬飛：走出普選第一步後才可完善 http://t.co/XfAlwGhzwV</li>
@@ -87,8 +147,19 @@
                             <li>占中投票個資疑外洩　港警調查http://t.co/ybRo9mf3GJ  #反占中</li>
                         </ol>
                     </div>
+                    <script>
+                        $(function () {
+                            var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+                            $('#singleFieldTags').tagit({
+                                availableTags: sampleTags,
+                                // This will make Tag-it submit a single form value, as a comma-delimited field.
+                                singleField: true,
+                                removeConfirmation: true
+                            });
+                        });
+                    </script>
                     <div class="col-md-4">
-                        <input type="text" class="span6" align= "text-center" placeholder="Subject" style="margin-bottom: 10px;">
+                        <input type="text" class="span6" align= "text-center" placeholder="Group some tags..." style="margin-bottom: 10px;">
                         <ol class="simple_with_animation vertical">
                             <li>新華社評論員：一旦佔中發生香港將不得安寧 http://t.co/t9NxlXFWrt</li>
                             <li>齊鵬飛：走出普選第一步後才可完善 http://t.co/XfAlwGhzwV</li>
@@ -139,20 +210,41 @@
             </div>
             <div class="col-md-4">
                 <div class="row" style="margin-left:0px;">
+                    <h5>Text Editor</h5>
                     <div class="summernote" id="summernote">Write a news story...</div>
                 </div>
                 <script>
                     $(document).ready(function () {
                         $('.summernote').summernote({
-                            width: 430,
-                            minHeight: null, // set minimum height of editor
-                            maxHeight: null, // set maximum height of editor
+//                            width: 430,
+                            height: 270,
+                            minHeight: 250,
+                            maxHeight: 250, // set maximum height of editor
                             focus: true // set focus to editable area after initializing summernote
                         });
                         $('.summernote').summernote();
                     });
                 </script>
+                <div class="row">
+                    <h5>Tags Overview</h5>
+                    <div class="tagsbox">
+                        <span class="label nounsTag" style="margin-right: 3px;">
+                            梁振英
+                        </span>
+                        <span class="label nounsTag" style="margin-right: 3px;">
+                            梁振英
+                        </span>
+                        <span class="label nounsTag" style="margin-right: 3px;">
+                            梁振英
+                        </span>
+                        <span class="label nounsTag" style="margin-right: 3px;">
+                            梁振英
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
 </html>
+<?php
+unseet($dbh);
