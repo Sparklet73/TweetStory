@@ -1,5 +1,4 @@
 function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
-    console.log(tv,kv,uv,nv);
     var jObject = {};
     var arrTime = [];
     var arrKeywords = [];
@@ -68,7 +67,7 @@ function makeTweetContent(tid, time, user, content, rtcount, tags) {
     rtn_content += user + '</p><p class="tweet_time"> ' + time + ' </p><br>';
     rtn_content += '<p class="tweet">' + content + '</p>';
     rtn_content += '<p class="rtcnt">Retweet count: ' + rtcount + '</p>';
-    rtn_content += '<a class="btn icon-btn btn-collect" href="#" id="cl-' + tid + '">';
+    rtn_content += '<a class="btn icon-btn btn-collect" id="cl-' + tid + '">';
     rtn_content += '<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>';
     var tagList = tags.split('/');
     for (var t in tagList) {

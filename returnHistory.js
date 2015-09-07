@@ -23,7 +23,7 @@ function returnHistory(userID) {
 function makeHistoryContent(hid, applied_at, time, time_w, keywords, keywords_w, users, users_w, nouns, nouns_w, tweets) {
     var rtn_content = '';
     rtn_content += '<div class="history_item" id="hs_';
-    rtn_content += hid + '"><h5 style="text-align: right;">';
+    rtn_content += hid + '"><button type="button" name="btn_history" id="btn_history" class="btn btn-info">Recover</button><h5 style="text-align:right;display:inline;">';
     rtn_content += applied_at + '</h5><ul class="list-group"><li class="list-group-item" style="height: 50px;><h5 class="list-group-item-heading">Time:';
     rtn_content += time_w + '</h5><p class="list-group-item-text" style="text-align: right;">';
     var word = time.split('|');
@@ -52,7 +52,7 @@ function makeHistoryContent(hid, applied_at, time, time_w, keywords, keywords_w,
         rtn_content += '<span class="label nounsTag" style="margin-left: 3px;">';
         rtn_content += word[w] + '</span>';
     }
-    rtn_content += '</p></li></ul><div class="row" style="overflow-x: hidden; overflow-y:auto; height: 280px;"><div class="well" id="well2">';
+    rtn_content += '</p></li></ul><div class="row" style="overflow-x: hidden; overflow-y:auto; height: 300px;"><div class="well" id="well2">';
     rtn_content += '<div class="list-group">';
     for (var t in tweets) {
         rtn_content += '<li href="#" class="list-group-item" style="padding:10px 15px;"><p class="list-group-item-text">';

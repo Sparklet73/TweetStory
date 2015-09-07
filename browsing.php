@@ -29,8 +29,10 @@
         <script src="d3/d3.min.js"></script>
         <script src="model/keywords/keywordsGraph.js"></script>
         <script src="model/time/timeChart.js"></script>
+        <script src="doMaterial.js"></script>
         <style type="text/css">    
             body, html {
+                background-image: url('img/page-background.png');
                 background-color: rgb(245,245,245);
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
                 overflow: hidden; //no scrollable bar
@@ -159,7 +161,7 @@
                     <h2>Tweets Display Area</h2>
                     <!--<ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>-->
                 </div>
-                <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;background-color: #fff;">
+                <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;">
                     <div class="row" id="tweetsDisplay">
                         <!--                        <div class="panel panel-info">
                                                     <p class="tweet_user">chenkang888</p><p class="tweet_time"> 2014/08/04 12:12:12 </p><br>
@@ -284,6 +286,14 @@
                                         </div>
                                     </div>-->
         </div>
+        <script>
+            var uID = 0;
+            $(document).ready(function () {
+                $("#tweetsDisplay").on("click","a.btn-collect", function () {
+                    saveMaterial(uID, $(this).attr("id"));
+                });
+            });
+        </script>
         <div class="col-md-5">
             <div class="row">
                 <h2>Story elements model</h2>
@@ -338,7 +348,7 @@
                 </div>
             </div>
             <div class="row" style="margin-top: 8px;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);border-radius:3px;border-color: #ccc;">
-                <div id="showTweetsFreq" style="min-width: 310px; height: 120px;border-color: #ccc;"></div>
+                <div id="showTweetsFreq" style="min-width: 310px; height: 120px;border-color: #ccc;background-color: #fff;"></div>
             </div>
         </div>
     </div>

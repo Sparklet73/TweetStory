@@ -15,9 +15,10 @@ ol.vertical li {
     display: block;
     margin: 5px;
     padding: 5px;
-    border: 1px solid #cccccc;
+    /*border: 1px solid #cccccc;*/
     color: #15151C;
-    background: #eeeeee; }
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26); }
 
 ol.vertical li.placeholder {
     position: relative;
@@ -59,8 +60,8 @@ ol.nested_with_switch.active, ol.nested_with_switch ol.active {
 ol.nested_with_switch li, ol.simple_with_animation li, ol.serialization li, ol.default li {
     cursor: pointer; }
 
-ol.simple_with_animation {
-    border: 1px solid #2E4272; }
+/*ol.simple_with_animation {
+    border: 1px solid #2E4272; }*/
 
 .switch-container {
     display: block;

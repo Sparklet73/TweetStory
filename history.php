@@ -12,6 +12,7 @@
         <script src="returnHistory.js"></script>
         <style type="text/css">
             body, html {
+                background-image: url('img/page-background.png');
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
                 /*overflow: hidden;*/
             }
@@ -68,13 +69,13 @@
                             <li class="active"><a href="#">History</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <p class="navbar-text" style="font-size: 16px;">Dataset: HKALLzh --- 497,519 tweets (from 2014-08-24 22:06:20 to 2014-12-17 13:55:22)</p>
+                            <p class="navbar-text">Dataset: HKALLzh --- 497,519 tweets (from 2014-08-24 22:06:20 to 2014-12-17 13:55:22)</p>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div> <!-- /.container-fluid -->
             </nav>
             <div class="col-md-12">
-                <h4>History</h4>
+                <h4 style="margin-top: 0px;margin-bottom: 0px;">History</h4>
                 <div class="history" id="history">
                 </div>
                 <script>

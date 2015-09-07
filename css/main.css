@@ -27,7 +27,6 @@
     margin-right: 5px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 }
-div.panel.panel-info:hover {border-color:#5E76AD;}
 /*------------------tweets list css end---------------------*/
 /*------------------4 models panel---------------------*/
 .panel-primary>.panel-heading {
