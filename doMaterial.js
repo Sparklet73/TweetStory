@@ -19,19 +19,25 @@ function saveMaterial(userID, tweet) {
     });
 }
 
-function showMaterial(userID) {
+function groupMaterial(userID, aryList, loc) {
+    
+    var tagsJson = {};
+    tagsJson["tag"] = aryList;
+    
     $.ajaxSetup({
         cache: false
     });
     
-    var jqxhr = $.getJSON('ajax_showMaterial.php', {
-        uID: userID
+    var jqxhr = $.getJSON('ajax_groupMaterial.php', {
+        uID: userID,
+        tJO: tagsJson
     });
 
     jqxhr.done(function (data) {
         if (data.rsStat) {
+            $(loc).html("");
             $.each(data.rsRes, function (index, val) {
-                $('#materialBox').append(makeMaterialObj(val));
+                $(loc).append(makeMaterialObj(val));
             });
         } else {
             showMessage('danger', data.rsTweet);
@@ -41,10 +47,8 @@ function showMaterial(userID) {
 
 function makeMaterialObj(text) {
     var rtn_content = '';
-    rtn_content += '<ol class="simple_with_animation vertical">';
     for (var t in text) {
         rtn_content += '<li>' + text[t] + '</li>';
     }
-    rtn_content += '</ol>';
     return rtn_content;
 }

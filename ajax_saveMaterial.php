@@ -17,12 +17,24 @@ try {
     $dbh = new PDO("mysql:host=$hostname;dbname=$database;charset=utf8", $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
+    $sql = "SELECT `tag` FROM `HKALLzh_collections` "
+            . "WHERE `userID` = ". $intUID ." "
+            . "and `tweetID` = ". $intTID ." GROUP BY `tag`";
+    $tweet_tag = $dbh->prepare($sql);
+    $tweet_tag->execute();
+    $arrQue = $tweet_tag->fetchAll(PDO::FETCH_ASSOC);
+    $strTags = "";
+    foreach($arrQue as $s) {
+        $strTags .= $s['tag'] . "|" ;
+    }
+    
 //    save material tweet
-    $sql_write = "INSERT INTO `HKALLzh_materials`(`materialID`, `userID`, `tweetID`) VALUES (NULL, :userID, :tweetID)";
+    $sql_write = "INSERT INTO `HKALLzh_materials`(`materialID`, `userID`, `tweetID`, `tags`) VALUES (NULL, :userID, :tweetID, :tags)";
     $stmt = $dbh->prepare($sql_write);
     if ($stmt) {
         $stmt->bindParam(':userID', $intUID, \PDO::PARAM_INT);
         $stmt->bindParam(':tweetID', $intTID, \PDO::PARAM_INT);
+        $stmt->bindParam(':tags', $strTags, \PDO::PARAM_STR);
         $stmt->execute();
     }
     $arrResult['rsStat'] = true;

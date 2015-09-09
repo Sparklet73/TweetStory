@@ -204,6 +204,9 @@
             <div class="row">
                 <h2>Tags</h2>
                 <b style="color:#A9A9A9;">Adjust weights for 4 tags.</b>
+                <a href="#">
+                    <span class="glyphicon glyphicon-bookmark" style="font-size: 24px;margin-top: 5px;"></span>
+                </a>
                 <div class="well" style="padding:15px;">
                     <div class="row">
                         <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-6"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="timeSliderVal">1</span></div> 
@@ -289,7 +292,7 @@
         <script>
             var uID = 0;
             $(document).ready(function () {
-                $("#tweetsDisplay").on("click","a.btn-collect", function () {
+                $("#tweetsDisplay").on("click", "a.btn-collect", function () {
                     saveMaterial(uID, $(this).attr("id"));
                 });
             });

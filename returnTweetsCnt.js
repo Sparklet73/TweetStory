@@ -38,7 +38,17 @@ function TweetsCount(arrData, strSub, strColor) {
         },
         plotOptions: {
             series: {
-                cursor: 'pointer'
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function () {
+                            d = Highcharts.dateFormat('%Y-%m-%d', this.x);
+//                                $('#TagsArea').append($("<option></option>").attr("value", "option" + d).text(d));
+                            $('#TagsArea').multiSelect('addOption', {value: "Time|" + d, text: d, index: 0, nested: 'Time'});
+//                                $('#TagsArea').multiSelect('refresh');
+                        }
+                    }
+                }
             }
         },
         series: [{
@@ -71,10 +81,10 @@ function NounShowNumOfTweets(aryLists) {
             var arr = [];
             $.each(data.rsDate, function (index, val) {
                 var mydate = val.dd.split("/");
-                arr.push([Date.UTC(parseInt(mydate[0]), parseInt(mydate[1])-1, parseInt(mydate[2])), parseInt(val.cnt)]);
+                arr.push([Date.UTC(parseInt(mydate[0]), parseInt(mydate[1]) - 1, parseInt(mydate[2])), parseInt(val.cnt)]);
             });
 //            console.log(arr);
-            TweetsCount(arr,"# of tweets including these words.", '#ED3C3C');
+            TweetsCount(arr, "# of tweets including these words.", '#ED3C3C');
         } else {
             showMessage('danger', data.rsDate);
         }
@@ -86,17 +96,17 @@ function UserShowNumOfTweets(strUser) {
     $.ajaxSetup({
         cache: false
     });
-    
+
     var jqxhr = $.getJSON('ajax_UserReturnTweetsCnt.php', {
         su: strUser
     });
-    
+
     jqxhr.done(function (data) {
         if (data.rsStat) {
             var arr = [];
             $.each(data.rsUser, function (index, val) {
                 var mydate = val.dd.split("/");
-                arr.push([Date.UTC(parseInt(mydate[0]), parseInt(mydate[1])-1, parseInt(mydate[2])), parseInt(val.cnt)]);
+                arr.push([Date.UTC(parseInt(mydate[0]), parseInt(mydate[1]) - 1, parseInt(mydate[2])), parseInt(val.cnt)]);
             });
             TweetsCount(arr, "# of tweets mentioned to this user.", '#248E8E');
         } else {

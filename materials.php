@@ -1,8 +1,8 @@
 <?php
 require_once 'config.php';
 
-$intUID = (int) filter_input(INPUT_GET, 'uID', FILTER_SANITIZE_NUMBER_INT);
-
+//$intUID = (int) filter_input(INPUT_GET, 'uID', FILTER_SANITIZE_NUMBER_INT);
+$intUID = 0;
 
 try {
     $dbh = new PDO("mysql:host=$hostname;dbname=$database;charset=utf8", $dbuser, $dbpass);
@@ -15,6 +15,17 @@ try {
     $stmt->execute();
 
     $materialContent = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql_tags = "SELECT `tag` FROM `HKALLzh_collections`"
+            . "WHERE `userID` = " . $intUID . " GROUP BY `tag`";
+    $stmt_tags = $dbh->prepare($sql_tags);
+    $stmt_tags->execute();
+
+    $tags_rs = $stmt_tags->fetchAll(PDO::FETCH_ASSOC);
+    $tags_ov = array();
+    foreach ($tags_rs as $tag) {
+        array_push($tags_ov, $tag['tag']);
+    }
 } catch (PDOException $ex) {
     $arrResult['rsStat'] = false;
     $arrResult['rsRes'] = $ex->getMessage();
@@ -65,7 +76,7 @@ try {
                 position: absolute;
                 /** Define arrowhead **/
             }
-            .tagsbox{
+            .tagsBox{
                 background-color: #fff;
                 border: 1px solid #ccc;
                 box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -79,21 +90,10 @@ try {
                 line-height: 22px;
                 cursor: text;
             }
-            .timeTag{
-                background: #FFC600;
-            }
-            .keywordsTag{
-                background: #A6DE38;
-            }
-            .usersTag{
-                background: #248E8E;
-            }
-            .nounsTag{
-                background: #ED3C3C;
-            }
             #materialBox .li {
                 background-color: #fff;
             }
+            input:focus, input.focus {border: 2px solid #2E4272;}
         </style>
     </head>
     <body>
@@ -134,38 +134,91 @@ try {
                             ?>
                         </ol>
                     </div>
-<!--                    <script>
-                        showMaterial(0);
-                    </script>-->
-                    <div class="col-md-4">
-                        <ul id="singleFieldTags"></ul>
-                        <!--<input type="text" class="span6" align= "text-center" placeholder="Group some tags..." style="margin-bottom: 10px;">-->
-                        <ol class="simple_with_animation vertical">
-                            <li>新華社評論員：一旦佔中發生香港將不得安寧 http://t.co/t9NxlXFWrt</li>
-                            <li>齊鵬飛：走出普選第一步後才可完善 http://t.co/XfAlwGhzwV</li>
-                            <li>佔中行動集會　陳健民批評人大決定荒謬 http://t.co/VLKqL6ezD6</li>
-                            <li>占中投票個資疑外洩　港警調查http://t.co/ybRo9mf3GJ  #反占中</li>
-                        </ol>
-                    </div>
-                    <script>
-                        $(function () {
-                            var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
-                            $('#singleFieldTags').tagit({
-                                availableTags: sampleTags,
-                                // This will make Tag-it submit a single form value, as a comma-delimited field.
-                                singleField: true,
-                                removeConfirmation: true
+                    <div class="col-md-8">
+                        <div class="col-md-6">
+                            <input type="text" id="subg1" placeholder="Group some tags..." style="margin-bottom: 10px;">
+                            <ol class="simple_with_animation vertical" id="grouptags1" style="height:560px;overflow-y:scroll;"></ol>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="subg2" placeholder="Group some tags..." style="margin-bottom: 10px;">
+                            <ol class="simple_with_animation vertical" id="grouptags2" style="height:560px;overflow-y:scroll;"></ol>
+                        </div>
+                        <!-- myModal_a start-->
+                        <div class="modal fade" id="myModal_a" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="gridSystemModalLabel">Group some tags you want to focus on.</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?php
+                                        foreach ($tags_ov as $tt) {
+                                            echo '<input name="selector[]" id="tag|' . $tt . '" class="ads_checkbox_a" type="checkbox" style="margin-right:5px;">' . $tt;
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="toggle" class="btn btn-primary" id="modal-save-event1" data-dismiss="modal">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- myModal_a end-->
+                        <!-- myModal_b start-->
+                        <div class="modal fade" id="myModal_b" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="gridSystemModalLabel">Group some tags you want to focus on.</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?php
+                                        foreach ($tags_ov as $tt) {
+                                            echo '<input name="selector[]" id="tag|' . $tt . '" class="ads_checkbox_b" type="checkbox" style="margin-right:5px;">' . $tt;
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="toggle" class="btn btn-primary" id="modal-save-event2" data-dismiss="modal">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- myModal-b end-->
+                        <script>
+                            var uID = 0;
+//                            first group column.
+                            $("input#subg1").on("focus", function () {
+                                $('#myModal_a').modal('show');
                             });
-                        });
-                    </script>
-                    <div class="col-md-4">
-                        <input type="text" class="span6" align= "text-center" placeholder="Group some tags..." style="margin-bottom: 10px;">
-                        <ol class="simple_with_animation vertical">
-                            <li>新華社評論員：一旦佔中發生香港將不得安寧 http://t.co/t9NxlXFWrt</li>
-                            <li>齊鵬飛：走出普選第一步後才可完善 http://t.co/XfAlwGhzwV</li>
-                            <li>佔中行動集會　陳健民批評人大決定荒謬 http://t.co/VLKqL6ezD6</li>
-                            <li>占中投票個資疑外洩　港警調查http://t.co/ybRo9mf3GJ  #反占中</li>
-                        </ol>
+                            $('#modal-save-event1').on('click', function (evt)
+                            {
+                                var val_a = [];
+                                $('.ads_checkbox_a:checked').each(function (i) {
+                                    var w = $(this).attr('id').split('|');
+                                    val_a[i] = w[1];
+                                });
+                                $("input#subg1").val(val_a);
+                                groupMaterial(uID, val_a,'#grouptags1');
+                            });
+                            
+//                            second group column.
+                            $("input#subg2").on("focus", function () {
+                                $('#myModal_b').modal('show');
+                            });
+                            $('#modal-save-event2').on('click', function (evt)
+                            {
+                                var val_b = [];
+                                $('.ads_checkbox_b:checked').each(function (i) {
+                                    var w = $(this).attr('id').split('|');
+                                    val_b[i] = w[1];
+                                });
+                                $("input#subg2").val(val_b);
+                                groupMaterial(uID, val_b,'#grouptags2');
+                            });
+                        </script>
                     </div>
                 </div>
                 <script>
@@ -225,23 +278,6 @@ try {
                         $('.summernote').summernote();
                     });
                 </script>
-                <div class="row">
-                    <h5>Tags Overview</h5>
-                    <div class="tagsbox">
-                        <span class="label nounsTag" style="margin-right: 3px;">
-                            梁振英
-                        </span>
-                        <span class="label nounsTag" style="margin-right: 3px;">
-                            梁振英
-                        </span>
-                        <span class="label nounsTag" style="margin-right: 3px;">
-                            梁振英
-                        </span>
-                        <span class="label nounsTag" style="margin-right: 3px;">
-                            梁振英
-                        </span>
-                    </div>
-                </div>
             </div>
         </div>
     </body>

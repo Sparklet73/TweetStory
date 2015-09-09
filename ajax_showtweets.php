@@ -36,7 +36,7 @@ try {
     $users_tags = "";
     $nouns_tags = "";
     $set_tweetsID = "";
-    
+
     $tweetScore = array();
     $tweetTags = array();
     foreach ($arrTweetList as $key => $value) {
@@ -122,6 +122,24 @@ try {
             $i += 1;
         } else {
             break;
+        }
+    }
+
+//    write into collections table
+    $sql_w_tag = "INSERT INTO `HKALLzh_collections`(`colID`,`userID`,`tweetID`,`tag`) VALUES (NULL, :uID, :tweetID, :tag)";
+    $st_w_tag = $dbh->prepare($sql_w_tag);
+    if ($st_w_tag) {
+        $st_w_tag->bindParam(':uID', $intUID, \PDO::PARAM_INT);
+        $st_w_tag->bindParam(':tweetID', $intTID, \PDO::PARAM_INT);
+        $st_w_tag->bindParam(':tag', $wtag, \PDO::PARAM_STR);
+        foreach ($arrResult['rsTweet'] as $k => $v) {
+            $intTID = $k;
+            $tl = explode("/", $v["tags"]);
+            foreach ($tl as $w) {
+                $t = explode("|", $w);
+                $wtag = $t[1];
+                $st_w_tag->execute();
+            }
         }
     }
 
