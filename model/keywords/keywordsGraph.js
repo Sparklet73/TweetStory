@@ -103,7 +103,7 @@ $(document).ready(function () {
 
         }
 //            執行點選cluster加入tags的動作
-        $("button[name='add-tags-topics']").click(function () {
+        $(".btn-add-tags-topics").click(function () {
 //            $('#TagsArea').append($("<option></option>").attr("value", "option" + myNode['name']).text(myNode['name']));
             $('#TagsArea').multiSelect('addOption', {value: "Keywords|" + myNode['name'], text: myNode['name'], index: 0, nested: 'Keywords'});
             for (var ww in myNode['children']) {

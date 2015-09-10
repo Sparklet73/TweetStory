@@ -107,6 +107,7 @@ $(document).ready(function () {
 
                     _.$('min-degree').addEventListener("input", applyMinDegreeFilter);  // for Chrome and FF
                     _.$('min-degree').addEventListener("change", applyMinDegreeFilter); // for IE10+, that sucks
+                    s2.refresh();
                 }
         );
     });

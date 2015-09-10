@@ -64,7 +64,7 @@ $(document).ready(function () {
             NounShowNumOfTweets(NowNodes);
         });
 
-        $("button[name='add-tags-noun']").click(function () {
+        $(".btn-add-tags-noun").click(function () {
             for (var nn in NowNodes) {
                 $('#TagsArea').multiSelect('addOption', {value: "Nouns|" + NowNodes[nn]['label'], text: NowNodes[nn]['label'], index: 0, nested: 'Nouns'});
 //                $('#TagsArea').append($("<option></option>").attr("value", "option" + NowNodes[nn]['label']).text(NowNodes[nn]['label']));
@@ -81,8 +81,8 @@ $(document).ready(function () {
 
     });
 
-
-    $("button[name='restart-camera']").click(function () {
+    $(".btn-restart-camera").click(function () {
+//    $("button[name='restart-camera']").click(function () {
         s.camera.goTo({
             x: 0,
             y: 0,
@@ -91,7 +91,7 @@ $(document).ready(function () {
         });
     });
 
-    $("button[name='reset-graph']").click(function () {
+    $(".btn-reset-graph").click(function () {
         sigma.parsers.json('model/nounrelation/rt10noun.json',
                 s,
                 function () {

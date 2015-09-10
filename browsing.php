@@ -159,6 +159,7 @@
             <div class="col-md-4">
                 <div class="row">
                     <h2>Tweets Display Area</h2>
+                    <b style="color:#A9A9A9;">Show tweets with score by your tags adjustment.</b>
                     <!--<ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>-->
                 </div>
                 <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;">
@@ -202,11 +203,31 @@
 
         <div class="col-md-3">
             <div class="row">
-                <h2>Tags</h2>
-                <b style="color:#A9A9A9;">Adjust weights for 4 tags.</b>
-                <a href="#">
-                    <span class="glyphicon glyphicon-bookmark" style="font-size: 24px;margin-top: 5px;"></span>
-                </a>
+                <h2>Tags zone</h2>
+                <br>
+                <div class="row">
+                    <div class="col-md-10" style="text-align: left;">
+                        <b style="color:#A9A9A9;">Adjust weights for 4 tags and bookmark a state if you want.</b>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-bookmark" style="font-size: 24px;"></span>
+                        </a>
+                    </div>
+                </div>
+                <script>
+                    $(".glyphicon-bookmark, .glyphicon-ok").click(function () {
+                        var $this = $(this);
+                        if ($this.hasClass("glyphicon-ok")) {
+                            $this.removeClass("glyphicon-ok").addClass("glyphicon-bookmark");
+                            return;
+                        }
+                        if ($this.hasClass("glyphicon-bookmark")) {
+                            $this.removeClass("glyphicon-bookmark").addClass("glyphicon-ok");
+                            return;
+                        }
+                    });
+                </script>
                 <div class="well" style="padding:15px;">
                     <div class="row">
                         <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-6"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="timeSliderVal">1</span></div> 
@@ -221,6 +242,7 @@
                     <optgroup label="Users"></optgroup>
                     <optgroup label="Nouns"></optgroup>
                 </select>
+                <br>
                 <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply</button>
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog">
@@ -300,6 +322,7 @@
         <div class="col-md-5">
             <div class="row">
                 <h2>Story elements model</h2>
+                <b style="color:#A9A9A9;">Explore the data story and pick some tags you're interested in.</b>
                 <div class="panel with-nav-tabs panel-primary">
                     <div class="panel-heading">
                         <ul class="nav nav-tabs pull-right">
@@ -316,13 +339,15 @@
                             </div>
                             <div class="tab-pane fade" id="tab2primary">
                                 <div style="text-align: right;">
-                                    <button type="button" name="add-tags-topics" id="add-tags-topics" class="btn btn-default">Add tags</button>
+                                    <a class="btn btn-danger btn-add-tags-topics" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;">
+                                        <span type="button" name="add-tags-topics" id="add-tags-topics" class="glyphicon glyphicon-plus-sign"></span>
+                                    </a>
                                 </div>
                                 <div id="keywordsGraph"></div>
                             </div>
                             <div class="tab-pane fade" id="tab3primary">
                                 <div class="col-md-10" style="padding:0px;">
-                                    <ul>Click the user point to add tag.</ul>
+                                    <ul>Top 50 users who was mentioned most.</ul><ul>Click the user point to add tag and check their post level below.</ul>
                                     <div id="userGraph"></div>
                                 </div>
                                 <div class="col-md-2" style="padding:0px;">
@@ -337,13 +362,30 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab4primary">
-                                <div class="panel panel-default">
-                                    <div style="text-align: right;">
-                                        <button type="button" name="restart-camera" id="restart-camera" class="btn btn-default">Reset camera</button>
-                                        <button type="button" name="reset-graph" id="reset-graph" class="btn btn-default">Reset graph</button>
-                                        <button type="button" name="add-tags-noun" id="add-tags-noun" class="btn btn-default">Add tags</button>
-                                    </div>
+                                <div class="col-md-11" style="padding:0px;">
+                                    <ul>These noun-points were extracted from the tweets which RT count > 10.</ul>
+                                    <ul>The relation are about the co-occurrence in same tweets.</ul> 
+                                    <ul>Click the point to explore their relation and tweets count below.</ul>
                                     <div id="relationGraph"></div>
+                                </div>
+                                <div class="col-md-1" style="padding:0px;">
+                                    <div id="control-pane">
+                                        <a class="btn btn-primary btn-restart-camera" href="#" data-toggle="tooltip" title="Restart camera to center." style="margin-bottom:3px;">
+                                            <span type="button" name="restart-camera" id="restart-camera" class="glyphicon glyphicon-screenshot"></span>
+                                        </a>
+                                        <a class="btn btn-info btn-reset-graph" href="#" data-toggle="tooltip" title="Reset to original graph."style="margin-bottom:3px;">
+                                            <span type="button" name="reset-graph" id="reset-graph" class="glyphicon glyphicon-refresh"></span>
+                                        </a>
+                                        <a class="btn btn-danger btn-add-tags-noun" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;">
+                                            <span type="button" name="add-tags-noun" id="add-tags-noun" class="glyphicon glyphicon-plus-sign"></span>
+                                        </a>
+                                        <!--                                        <button type="button" name="restart-camera" id="restart-camera" class="btn btn-info" style="width:60px;margin-bottom:8px;text-align: right;">Restart<br>camera</button>
+                                                                                <button type="button" name="reset-graph" id="reset-graph" class="btn btn-info" style="width:60px;margin-bottom:8px;">Reset<br>graph</button>
+                                                                                <button type="button" name="add-tags-noun" id="add-tags-noun" class="btn btn-info" style="width:60px;margin-bottom:8px;">Add tags</button>-->
+                                    </div>
+                                    <script>
+                                        $('[data-toggle="tooltip"]').tooltip();
+                                    </script>
                                 </div>
                             </div>
                         </div>
