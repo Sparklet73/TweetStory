@@ -113,7 +113,7 @@ try {
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="browsing.php">Browsing Room<span class="sr-only">(current)</span></a></li>
-                            <li class="active"><a href="#">Materials Room</a></li>
+                            <li class="active"><a href="materials.php">Materials Room</a></li>
                             <li><a href="history.php">History</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">

@@ -168,7 +168,7 @@ try {
     }
 
 //    return tweets to tweets display area
-    $sql = "SELECT `id`, `from_user_name`, `created_at`, `text`, `retweet_count` 
+    $sql = "SELECT `id`, `from_user_name`, `from_user_description`, `created_at`, `text`, `retweet_count` 
             FROM `HKALLzh_main` 
             WHERE `id` IN (" . implode(',', array_keys($arrResult['rsTweet'])) . ")";
 
@@ -176,6 +176,7 @@ try {
     $stmt->execute();
     while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $arrResult['rsTweet'][$arrQue["id"]]["from_user_name"] = $arrQue['from_user_name'];
+        $arrResult['rsTweet'][$arrQue["id"]]["from_user_description"] = $arrQue['from_user_description'];
         $arrResult['rsTweet'][$arrQue["id"]]["created_at"] = $arrQue['created_at'];
         $arrResult['rsTweet'][$arrQue["id"]]["text"] = $arrQue['text'];
         $arrResult['rsTweet'][$arrQue["id"]]["retweet_cnt"] = $arrQue['retweet_count'];

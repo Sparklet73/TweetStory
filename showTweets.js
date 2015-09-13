@@ -53,8 +53,9 @@ function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
             document.getElementById('hbm').value = data.bookmarkID;
             $('#tweetsDisplay').html("");
             $.each(data.rsTweet, function (index, val) {
-                $('#tweetsDisplay').append(makeTweetContent(index, val.created_at, val.from_user_name, val.text, val.retweet_cnt, val.tags));
+                $('#tweetsDisplay').append(makeTweetContent(index, val.created_at, val.from_user_name, val.from_user_description, val.text, val.retweet_cnt, val.tags));
             });
+            makeTweetParsed();
             NProgress.done();
         } else {
             showMessage('danger', data.rsTweet);
@@ -62,10 +63,11 @@ function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
     });
 }
 
-function makeTweetContent(tid, time, user, content, rtcount, tags) {
+function makeTweetContent(tid, time, user, user_des, content, rtcount, tags) {
     var rtn_content = '';
-    rtn_content += '<div class="panel panel-info"><p class="tweet_user">';
-    rtn_content += user + '</p><p class="tweet_time"> ' + time + ' </p><br>';
+    rtn_content += '<div class="panel panel-info"><a class="tweet_user" href="http://twitter.com/' + user + '" ';
+    rtn_content += ' data-toggle="tooltip" title="'+ user_des + '">';
+    rtn_content += user + '</a><p class="tweet_time"> ' + time + ' </p><br>';
     rtn_content += '<p class="tweet">' + content + '</p>';
     rtn_content += '<p class="rtcnt">Retweet count: ' + rtcount + '</p>';
     rtn_content += '<a class="btn icon-btn btn-collect" id="cl-' + tid + '">';
@@ -87,4 +89,15 @@ function makeTweetContent(tid, time, user, content, rtcount, tags) {
     }
     rtn_content += '</div>';
     return rtn_content;
+}
+
+function makeTweetParsed() {
+    $(".tweet").tweetParser({
+        urlClass: "tweet_link", //this is default
+        userClass: "tweet_mention", //this is default
+        hashtagClass: "hashtag", //this is default
+        target: "_blank", //this is default
+        searchWithHashtags: true
+    });
+    $('[data-toggle="tooltip"]').tooltip();
 }
