@@ -50,6 +50,7 @@ function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
 
     jqxhr.done(function (data) {
         if (data.rsStat) {
+            document.getElementById('hbm').value = data.bookmarkID;
             $('#tweetsDisplay').html("");
             $.each(data.rsTweet, function (index, val) {
                 $('#tweetsDisplay').append(makeTweetContent(index, val.created_at, val.from_user_name, val.text, val.retweet_cnt, val.tags));

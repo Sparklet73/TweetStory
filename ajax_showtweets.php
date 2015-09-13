@@ -31,18 +31,17 @@ try {
     $dbh = new PDO("mysql:host=$hostname;dbname=$database;charset=utf8", $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $time_tags = "";
-    $keywords_tags = "";
-    $users_tags = "";
-    $nouns_tags = "";
-    $set_tweetsID = "";
+    $time_tags = array();
+    $keywords_tags = array();
+    $users_tags = array();
+    $nouns_tags = array();
 
     $tweetScore = array();
     $tweetTags = array();
     foreach ($arrTweetList as $key => $value) {
         if ($key == "Time") {
             foreach ($value as $v) {
-                $time_tags .= $v . "|";
+                array_push($time_tags, $v);
                 $sql = "SELECT `id` FROM `HKALLzh_main` WHERE `created_at` LIKE '" . $v . "%'";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
@@ -59,7 +58,7 @@ try {
         }
         if ($key == "Keywords") {
             foreach ($value as $v) {
-                $keywords_tags .= $v . "|";
+                array_push($keywords_tags, $v);
                 $sql = "SELECT `id` FROM `HKALLzh_main` WHERE `text` LIKE '%" . $v . "%'";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
@@ -76,7 +75,7 @@ try {
         }
         if ($key == "Users") {
             foreach ($value as $v) {
-                $users_tags .= $v . "|";
+                array_push($users_tags, $v);
                 $sql = "SELECT `id` FROM `HKALLzh_main` WHERE `from_user_name` LIKE '" . $v . "'";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
@@ -93,7 +92,7 @@ try {
         }
         if ($key == "Nouns") {
             foreach ($value as $v) {
-                $nouns_tags .= $v . "|";
+                array_push($nouns_tags, $v);
                 $sql = "SELECT `id` FROM `HKALLzh_main` WHERE `text` LIKE '%" . $v . "%'";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
@@ -114,11 +113,10 @@ try {
     $arrResult['rsStat'] = true;
     $arrResult['rsTweet'] = array();
     $i = 0;
-//    $onethouTweets == $arrResult['rsTweet'];
     foreach ($tweetScore as $k => $v) {
         if ($i < 1000) {
             $arrResult['rsTweet'][$k]["tags"] = $tweetTags[$k];
-            $set_tweetsID .= strval($k) . "|";
+//            $set_tweetsID .= strval($k) . "|";
             $i += 1;
         } else {
             break;
@@ -142,26 +140,31 @@ try {
             }
         }
     }
+    $strTimeTag = implode("|", $time_tags);
+    $strKeywordsTag = implode("|", $keywords_tags);
+    $strUsersTag = implode("|", $users_tags);
+    $strNounsTag = implode("|", $nouns_tags);
 
 //    write history record
     $sql_write = 'INSERT INTO `HKALLzh_history`(`historyID`, `userID`, `applied_at`, `time`, `time_w`, '
-            . '`keywords`, `keywords_w`, `users`, `users_w`, `nouns`, `nouns_w`, `set_tweetsID`) '
+            . '`keywords`, `keywords_w`, `users`, `users_w`, `nouns`, `nouns_w`) '
             . 'VALUES (NULL, :userID, :applied_at, :time, :time_w, '
-            . ':keywords, :keywords_w, :users, :users_w, :nouns, :nouns_w, :set_tweetsID)';
+            . ':keywords, :keywords_w, :users, :users_w, :nouns, :nouns_w)';
     $history = $dbh->prepare($sql_write);
     if ($history) {
         $history->bindParam(':userID', $intUID, \PDO::PARAM_INT);
         $history->bindParam(':applied_at', $strDatetime, \PDO::PARAM_STR);
-        $history->bindParam(':time', $time_tags, \PDO::PARAM_STR);
+        $history->bindParam(':time', $strTimeTag, \PDO::PARAM_STR);
         $history->bindParam(':time_w', $intTimeW, \PDO::PARAM_INT);
-        $history->bindParam(':keywords', $keywords_tags, \PDO::PARAM_STR);
+        $history->bindParam(':keywords', $strKeywordsTag, \PDO::PARAM_STR);
         $history->bindParam(':keywords_w', $intKeywordsW, \PDO::PARAM_INT);
-        $history->bindParam(':users', $users_tags, \PDO::PARAM_STR);
+        $history->bindParam(':users', $strUsersTag, \PDO::PARAM_STR);
         $history->bindParam(':users_w', $intUsersW, \PDO::PARAM_INT);
-        $history->bindParam(':nouns', $nouns_tags, \PDO::PARAM_STR);
+        $history->bindParam(':nouns', $strNounsTag, \PDO::PARAM_STR);
         $history->bindParam(':nouns_w', $intNounsW, \PDO::PARAM_INT);
-        $history->bindParam(':set_tweetsID', $set_tweetsID, \PDO::PARAM_STR);
+//        $history->bindParam(':set_tweetsID', $set_tweetsID, \PDO::PARAM_STR);
         $history->execute();
+        $lastHistoryId = $dbh->lastInsertId();
     }
 
 //    return tweets to tweets display area
@@ -177,6 +180,9 @@ try {
         $arrResult['rsTweet'][$arrQue["id"]]["text"] = $arrQue['text'];
         $arrResult['rsTweet'][$arrQue["id"]]["retweet_cnt"] = $arrQue['retweet_count'];
     }
+    
+    $arrResult['bookmarkID'] = $lastHistoryId;
+    
 } catch (PDOException $ex) {
     $arrResult['rsStat'] = false;
     $arrResult['rsTweet'] = $ex->getMessage();

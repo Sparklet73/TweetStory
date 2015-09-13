@@ -1,3 +1,33 @@
+<?php
+require_once 'config.php';
+
+$intUID = 0;
+$reHistoryID = isset($_GET['reHID']) ? $_GET['reHID'] : 0;
+
+try {
+    $dbh = new PDO("mysql:host=$hostname;dbname=$database;charset=utf8", $dbuser, $dbpass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $t_w = $k_w = $u_w = $n_w = 1;
+    if ($reHistoryID) {
+        $sql = "SELECT * FROM `HKALLzh_history` WHERE `userID` =" . $intUID
+                . " AND `historyID` = " . $reHistoryID;
+
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+
+        $arrResult = $stmt->fetch(PDO::FETCH_ASSOC);
+        $t_w = $arrResult['time_w'];
+        $k_w = $arrResult['keywords_w'];
+        $u_w = $arrResult['users_w'];
+        $n_w = $arrResult['nouns_w'];
+    }
+} catch (PDOException $ex) {
+    echo $ex->getMessage();
+} catch (Exception $exc) {
+    echo $exc->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,12 +60,14 @@
         <script src="model/keywords/keywordsGraph.js"></script>
         <script src="model/time/timeChart.js"></script>
         <script src="doMaterial.js"></script>
+        <script src="bookmarkHistory.js"></script>
         <style type="text/css">    
             body, html {
                 background-image: url('img/page-background.png');
                 background-color: rgb(245,245,245);
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
-                overflow: hidden; //no scrollable bar
+                /*no scrollable bar*/
+                overflow: hidden; 
             }
             #timeChart, #relationGraph, #userGraph, #keywordsGraph {
                 /*                top: 0;
@@ -48,16 +80,16 @@
                             margin-bottom: 0;
                             border-color:#2E4272
                         }*/
-            //----usergraph filter----//
-            #control-pane {
-                top: 10px;
-                /*bottom: 10px;*/
-                right: 10px;
-                position: absolute;
-                width: 200px;
-                background-color: rgb(249, 247, 237);
-                box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            }
+            /*----usergraph filter----*/
+            /*            #control-pane {
+                            top: 10px;
+                            bottom: 10px;
+                            right: 10px;
+                            position: absolute;
+                            width: 200px;
+                            background-color: rgb(249, 247, 237);
+                            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                        }*/
             .line {
                 clear: both;
                 display: block;
@@ -89,8 +121,8 @@
                 display: inline;
                 width: 50px;
             }
-            //----usergraph filter end-----
-            //----keywordsGraph 的設定------
+            /*----usergraph filter end-----*/
+            /*----keywordsGraph 的設定------*/
             .wordnode {
                 cursor: pointer;
             }
@@ -106,8 +138,8 @@
             .wordnode--leaf {
                 pointer-events: none;
             }
-            //----keywordsGraph 設定 結束-----
-            //----bootstrap Tags slider 設定 開始-----
+            /*----keywordsGraph 設定 結束-----*/
+            /*----bootstrap Tags slider 設定 開始-----*/
             #well .b {
                 width: auto;
             }
@@ -126,7 +158,7 @@
             #timeSlider, #keywordsSlider, #usersSlider, #nounsSlider{
                 width: 130px;
             }
-            //----bootstrap Tags slider 設定 結束-----
+            /*----bootstrap Tags slider 設定 結束-----*/
         </style>
     </head>
 
@@ -159,7 +191,7 @@
             <div class="col-md-4">
                 <div class="row">
                     <h2>Tweets Display Area</h2>
-                    <b style="color:#A9A9A9;">Show tweets with score by your tags adjustment.</b>
+                    <b style="color:#686868;">Show tweets with score by your tags adjustment.</b>
                     <!--<ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>-->
                 </div>
                 <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;">
@@ -207,43 +239,95 @@
                 <br>
                 <div class="row">
                     <div class="col-md-10" style="text-align: left;">
-                        <b style="color:#A9A9A9;">Adjust weights for 4 tags and bookmark a state if you want.</b>
+                        <b style="color:#686868;">Adjust weights for 4 tags and bookmark a state if you want.</b>
                     </div>
                     <div class="col-md-2">
-                        <a href="#">
-                            <span class="glyphicon glyphicon-bookmark" style="font-size: 24px;"></span>
+                        <a class="btn btn-success btn-bookmark" href="#" data-toggle="tooltip" title="Bookmark this state." style="text-shadow: black 3px 3px 3px;">
+                            <span type="button" name="btn-bookmark" id="btn-boookmark" class="glyphicon glyphicon-bookmark" style="text-align:center;"></span>
                         </a>
                     </div>
                 </div>
+                <br>
                 <script>
-                    $(".glyphicon-bookmark, .glyphicon-ok").click(function () {
-                        var $this = $(this);
+                    $("a.btn-bookmark").click(function () {
+                        var thisHID = $('#hbm').val();
+                        var $this = $("#btn-boookmark");
                         if ($this.hasClass("glyphicon-ok")) {
                             $this.removeClass("glyphicon-ok").addClass("glyphicon-bookmark");
+                            bookmark_history(false, thisHID);
                             return;
                         }
                         if ($this.hasClass("glyphicon-bookmark")) {
                             $this.removeClass("glyphicon-bookmark").addClass("glyphicon-ok");
+                            bookmark_history(true, thisHID);
                             return;
                         }
                     });
                 </script>
                 <div class="well" style="padding:15px;">
                     <div class="row">
-                        <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-6"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="timeSliderVal">1</span></div> 
-                        <div class="col-md-4" style="font-size:15px;">Keywords</div> <div class="col-md-6"><input id="keywordsSlider" data-slider-id='keywordsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="keywordsSliderVal">1</span></div> 
-                        <div class="col-md-4" style="font-size:15px;">Users</div> <div class="col-md-6"><input id="usersSlider" data-slider-id='usersSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="usersSliderVal">1</span></div> 
-                        <div class="col-md-4" style="font-size:15px;">Nouns</div> <div class="col-md-6"><input id="nounsSlider" data-slider-id='nounsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="nounsSliderVal">1</span></div> 
+                        <div class="col-md-4" style="font-size:15px;">Time</div> <div class="col-md-6"><input id="timeSlider" data-slider-id='timeSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="<?php echo $t_w; ?>" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="timeSliderVal"><?php echo $t_w; ?></span></div> 
+                        <div class="col-md-4" style="font-size:15px;">Keywords</div> <div class="col-md-6"><input id="keywordsSlider" data-slider-id='keywordsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="<?php echo $k_w; ?>" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="keywordsSliderVal"><?php echo $k_w; ?></span></div> 
+                        <div class="col-md-4" style="font-size:15px;">Users</div> <div class="col-md-6"><input id="usersSlider" data-slider-id='usersSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="<?php echo $u_w; ?>" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="usersSliderVal"><?php echo $u_w; ?></span></div> 
+                        <div class="col-md-4" style="font-size:15px;">Nouns</div> <div class="col-md-6"><input id="nounsSlider" data-slider-id='nounsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="<?php echo $n_w; ?>" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="nounsSliderVal"><?php echo $n_w; ?></span></div> 
                     </div>
                 </div>
-                <select id='TagsArea' multiple='multiple'>
+                <?php
+                if ($reHistoryID) {
+                    echo '<select id="TagsArea" multiple="multiple">';
+                    if ($arrResult['time'] != "") {
+                        $timeList = explode('|', $arrResult['time']);
+                        echo '<optgroup label="Time">';
+                        foreach ($timeList as $w) {
+                            echo '<option value="Time|' . $w . '" selected>' . $w . '</option>';
+                        }
+                        echo '</optgroup>';
+                    } else {
+                        echo '<optgroup label="Time"></optgroup>';
+                    }
+                    if ($arrResult['keywords'] != "") {
+                        $kwList = explode('|', $arrResult['keywords']);
+                        echo '<optgroup label="Keywords">';
+                        foreach ($kwList as $w) {
+                            echo '<option value="Keywords|' . $w . '" selected>' . $w . '</option>';
+                        }
+                        echo '</optgroup>';
+                    } else {
+                        echo '<optgroup label="Keywords"></optgroup>';
+                    }
+                    if ($arrResult['users'] != "") {
+                        $userList = explode('|', $arrResult['users']);
+                        echo '<optgroup label="Users">';
+                        foreach ($userList as $w) {
+                            echo '<option value="Users|' . $w . '" selected>' . $w . '</option>';
+                        }
+                        echo '</optgroup>';
+                    } else {
+                        echo '<optgroup label="Users"></optgroup>';
+                    }
+                    if ($arrResult['nouns'] != "") {
+                        $nounsList = explode('|', $arrResult['nouns']);
+                        echo '<optgroup label="Nouns">';
+                        foreach ($nounsList as $w) {
+                            echo '<option value="Nouns|' . $w . '" selected>' . $w . '</option>';
+                        }
+                        echo '</optgroup>';
+                    } else {
+                        echo '<optgroup label="Nouns"></optgroup>';
+                    }
+                    echo '</select>';
+                } else {
+                    echo '<select id="TagsArea" multiple="multiple">
                     <optgroup label="Time"></optgroup>
                     <optgroup label="Keywords"></optgroup>
                     <optgroup label="Users"></optgroup>
                     <optgroup label="Nouns"></optgroup>
-                </select>
+                </select>';
+                }
+                ?>
                 <br>
                 <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply</button>
+                <input type="hidden" id="hbm">
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -256,7 +340,7 @@
                 </div>
                 <script>
                     var userID = 0; //for test using.
-                    var tv = 1, kv = 1, uv = 1, nv = 1;
+                    var tv = <?php echo $t_w; ?>, kv = <?php echo $k_w; ?>, uv = <?php echo $u_w; ?>, nv = <?php echo $n_w; ?>;
                     $('#timeSlider').bootstrapSlider({});
                     $("#timeSlider").on("slide", function (slideEvt) {
                         $("#timeSliderVal").text(slideEvt.value);
@@ -300,6 +384,7 @@
                             //console.log(tags + tv + kv + uv + nv);
                             parseTags(userID, strDatetime, tags, tv, kv, uv, nv);
                         }
+                        $("#btn-boookmark").attr('class', 'glyphicon glyphicon-bookmark');
                     });
                 </script>
             </div>
@@ -322,7 +407,7 @@
         <div class="col-md-5">
             <div class="row">
                 <h2>Story elements model</h2>
-                <b style="color:#A9A9A9;">Explore the data story and pick some tags you're interested in.</b>
+                <b style="color:#686868;">Explore the data story and pick some tags you're interested in.</b>
                 <div class="panel with-nav-tabs panel-primary">
                     <div class="panel-heading">
                         <ul class="nav nav-tabs pull-right">
@@ -339,7 +424,7 @@
                             </div>
                             <div class="tab-pane fade" id="tab2primary">
                                 <div style="text-align: right;">
-                                    <a class="btn btn-danger btn-add-tags-topics" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;">
+                                    <a class="btn btn-danger btn-add-tags-topics" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;text-shadow: black 3px 3px 3px;">
                                         <span type="button" name="add-tags-topics" id="add-tags-topics" class="glyphicon glyphicon-plus-sign"></span>
                                     </a>
                                 </div>
@@ -370,13 +455,13 @@
                                 </div>
                                 <div class="col-md-1" style="padding:0px;">
                                     <div id="control-pane">
-                                        <a class="btn btn-primary btn-restart-camera" href="#" data-toggle="tooltip" title="Restart camera to center." style="margin-bottom:3px;">
+                                        <a class="btn btn-primary btn-restart-camera" href="#" data-toggle="tooltip" title="Restart camera to center." style="margin-bottom:3px;text-shadow: black 3px 3px 3px;">
                                             <span type="button" name="restart-camera" id="restart-camera" class="glyphicon glyphicon-screenshot"></span>
                                         </a>
-                                        <a class="btn btn-info btn-reset-graph" href="#" data-toggle="tooltip" title="Reset to original graph."style="margin-bottom:3px;">
+                                        <a class="btn btn-info btn-reset-graph" href="#" data-toggle="tooltip" title="Reset to original graph."style="margin-bottom:3px;text-shadow: black 3px 3px 3px;">
                                             <span type="button" name="reset-graph" id="reset-graph" class="glyphicon glyphicon-refresh"></span>
                                         </a>
-                                        <a class="btn btn-danger btn-add-tags-noun" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;">
+                                        <a class="btn btn-danger btn-add-tags-noun" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;text-shadow: black 3px 3px 3px;">
                                             <span type="button" name="add-tags-noun" id="add-tags-noun" class="glyphicon glyphicon-plus-sign"></span>
                                         </a>
                                         <!--                                        <button type="button" name="restart-camera" id="restart-camera" class="btn btn-info" style="width:60px;margin-bottom:8px;text-align: right;">Restart<br>camera</button>
@@ -399,3 +484,5 @@
     </div>
 </body>
 </html>
+<?php
+unset($dbh);

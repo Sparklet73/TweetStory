@@ -57,7 +57,7 @@ try {
             body, html {
                 background-image: url('img/page-background.png');
                 font-family: "Trebuchet MS Black", "LiHei Pro", "Microsoft JhengHei";
-                //overflow: hidden; //no scrollable bar
+                overflow: hidden; /*no scrollable bar*/
             }
             body.dragging, body.dragging * {
                 cursor: move !important;
@@ -126,7 +126,7 @@ try {
                 <div class="row">  
                     <div class="col-md-4" id="materialBox">
                         <h4>Materials Box</h4>
-                        <ol class="simple_with_animation vertical" style="height:560px;overflow-y:scroll;">
+                        <ol class="simple_with_animation vertical" style="height:560px;overflow-y:auto;">
                             <?php
                             foreach ($materialContent as $content) {
                                 echo "<li>" . $content['text'] . "</li>";
@@ -136,12 +136,12 @@ try {
                     </div>
                     <div class="col-md-8">
                         <div class="col-md-6">
-                            <input type="text" id="subg1" placeholder="Group some tags..." style="margin-bottom: 10px;">
-                            <ol class="simple_with_animation vertical" id="grouptags1" style="height:560px;overflow-y:scroll;"></ol>
+                            <input type="text" id="subg1" placeholder="Group some tags..." style="margin: 10px 0 5px 5px;border-radius:2px;">
+                            <ol class="simple_with_animation vertical" id="grouptags1" style="height:560px;overflow-y:auto;"></ol>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" id="subg2" placeholder="Group some tags..." style="margin-bottom: 10px;">
-                            <ol class="simple_with_animation vertical" id="grouptags2" style="height:560px;overflow-y:scroll;"></ol>
+                            <input type="text" id="subg2" placeholder="Group some tags..." style="margin: 10px 0 5px 5px;border-radius:2px;">
+                            <ol class="simple_with_animation vertical" id="grouptags2" style="height:560px;overflow-y:auto;"></ol>
                         </div>
                         <!-- myModal_a start-->
                         <div class="modal fade" id="myModal_a" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

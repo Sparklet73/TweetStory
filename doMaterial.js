@@ -12,7 +12,7 @@ function saveMaterial(userID, tweet) {
 
     jqxhr.done(function (data) {
         if (data.rsStat) {
-            console.log("success");
+            console.log("Save material succeed!");
         } else {
             showMessage('danger', data.rsTweet);
         }
