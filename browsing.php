@@ -223,6 +223,7 @@ try {
                 </div>
             </div>
         </div>
+        <!--好像不需要在這邊assign了，當append上推文後，有另外寫函數去執行tweetParse。-->
         <script type="text/javascript">
             $(".tweet").tweetParser({
                 urlClass: "tweet_link", //this is default
@@ -248,19 +249,34 @@ try {
                     </div>
                 </div>
                 <br>
+                <div class="modal fade" id="bm-alert" tabindex="-1" role="dialog" aria-labelledby="bm-alertLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="border-bottom:initial;">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="bm-alertLabel">You didn't apply any tags.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <script>
+//                    bookmark按下的不同反應，toggle bookmark跟勾勾，bookmark後會將資料庫中的history bookmarked改值。
                     $("a.btn-bookmark").click(function () {
                         var thisHID = $('#hbm').val();
                         var $this = $("#btn-boookmark");
-                        if ($this.hasClass("glyphicon-ok")) {
-                            $this.removeClass("glyphicon-ok").addClass("glyphicon-bookmark");
-                            bookmark_history(false, thisHID);
-                            return;
-                        }
-                        if ($this.hasClass("glyphicon-bookmark")) {
-                            $this.removeClass("glyphicon-bookmark").addClass("glyphicon-ok");
-                            bookmark_history(true, thisHID);
-                            return;
+                        if ($('#hbm').val() !== '') {
+                            if ($this.hasClass("glyphicon-ok")) {
+                                $this.removeClass("glyphicon-ok").addClass("glyphicon-bookmark");
+                                bookmark_history(false, thisHID);
+                                return;
+                            }
+                            if ($this.hasClass("glyphicon-bookmark")) {
+                                $this.removeClass("glyphicon-bookmark").addClass("glyphicon-ok");
+                                bookmark_history(true, thisHID);
+                                return;
+                            }
+                        } else {
+                            $('#bm-alert').modal('show');
                         }
                     });
                 </script>
@@ -272,6 +288,25 @@ try {
                         <div class="col-md-4" style="font-size:15px;">Nouns</div> <div class="col-md-6"><input id="nounsSlider" data-slider-id='nounsSlider' type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="<?php echo $n_w; ?>" data-slider-tooltip="hide"/></div><div class="col-md-2"><span id="nounsSliderVal"><?php echo $n_w; ?></span></div> 
                     </div>
                 </div>
+                <input type="text" id="handmadeTag" class="form-control" placeholder="Add keyword tags by yourself." style="margin-bottom: 10px;">
+                <script>
+                    $("#handmadeTag").bind("keypress", {}, keypressInBox);
+                    function keypressInBox(e) {
+                        if (e.keyCode === 13) {
+                            var hmT = $('#handmadeTag').val();
+                            $('#TagsArea').multiSelect('addOption', {value: "Keywords|" + hmT, text: hmT, index: 0, nested: 'Keywords'});
+                            var found = [];
+                            $("#TagsArea option").each(function () {
+                                if ($.inArray(this.value, found) !== -1)
+                                    $(this).remove();
+                                found.push(this.value);
+                            });
+                            $('#handmadeTag').val('');
+                        }
+                    }
+                    ;
+                </script>
+                <!--當使用者是從history那邊點選恢復來browsing這邊的時候，要恢復tag跟權重。-->
                 <?php
                 if ($reHistoryID) {
                     echo '<select id="TagsArea" multiple="multiple">';
@@ -331,7 +366,7 @@ try {
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header" style="border-bottom:initial;">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Explore story models to get some tags.</h4>
                             </div>
@@ -397,6 +432,7 @@ try {
                                     </div>-->
         </div>
         <script>
+//            當使用者按下Collect按鈕時，紀錄該則推文ID。
             var uID = 0;
             $(document).ready(function () {
                 $("#tweetsDisplay").on("click", "a.btn-collect", function () {
