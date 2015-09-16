@@ -34,7 +34,7 @@ try {
             FROM `HKALLzh_materials`, `HKALLzh_main`
             WHERE (" . implode(" OR ", $strSql) .
             ") and `HKALLzh_materials`.`tweetID`=`HKALLzh_main`.`id` 
-            and `HKALLzh_materials`.`userID` = 0";
+            and `HKALLzh_materials`.`userID` = " . $intUID;
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 

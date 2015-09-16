@@ -23,10 +23,12 @@ try {
     $tweet_tag = $dbh->prepare($sql);
     $tweet_tag->execute();
     $arrQue = $tweet_tag->fetchAll(PDO::FETCH_ASSOC);
-    $strTags = "";
+    $arrTags = array();
     foreach($arrQue as $s) {
-        $strTags .= $s['tag'] . "|" ;
+        array_push($arrTags, $s['tag']);
     }
+    
+    $strTags = implode("|", $arrTags);
     
 //    save material tweet
     $sql_write = "INSERT INTO `HKALLzh_materials`(`materialID`, `userID`, `tweetID`, `tags`) VALUES (NULL, :userID, :tweetID, :tags)";

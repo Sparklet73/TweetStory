@@ -14,7 +14,7 @@ function saveMaterial(userID, tweet) {
         if (data.rsStat) {
             console.log("Save material succeed!");
         } else {
-            showMessage('danger', data.rsTweet);
+            showMessage('danger', data.rsRes);
         }
     });
 }
@@ -40,7 +40,7 @@ function groupMaterial(userID, aryList, loc) {
                 $(loc).append(makeMaterialObj(val));
             });
         } else {
-            showMessage('danger', data.rsTweet);
+            showMessage('danger', data.rsRes);
         }
     });
 }

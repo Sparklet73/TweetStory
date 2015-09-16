@@ -1,7 +1,8 @@
 <?php
+session_start();
 require_once 'config.php';
 
-$intUID = 0;
+$intUID = $_SESSION['uID'];
 $bm = isset($_GET['bm']);
 
 try {
@@ -107,8 +108,8 @@ try {
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="browsing.php">Browsing Room<span class="sr-only">(current)</span></a></li>
-                            <li><a href="materials.php">Materials Room</a></li>
+                            <li><a href="browsing.php" target = '_blank'>Browsing Room<span class="sr-only">(current)</span></a></li>
+                            <li><a href="materials.php" target = '_blank'>Materials Room</a></li>
                             <li class="active"><a href="history.php">History</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">

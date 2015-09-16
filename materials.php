@@ -1,8 +1,9 @@
 <?php
+session_start();
 require_once 'config.php';
 
 //$intUID = (int) filter_input(INPUT_GET, 'uID', FILTER_SANITIZE_NUMBER_INT);
-$intUID = 0;
+$intUID = $_SESSION['uID'];
 
 try {
     $dbh = new PDO("mysql:host=$hostname;dbname=$database;charset=utf8", $dbuser, $dbpass);
@@ -16,19 +17,23 @@ try {
 
     $materialContent = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql_tags = "SELECT `tag` FROM `HKALLzh_collections`"
-            . "WHERE `userID` = " . $intUID . " GROUP BY `tag`";
+    $sql_tags = "SELECT `tags` FROM `HKALLzh_materials`"
+            . "WHERE `userID` = " . $intUID . " GROUP BY `tags`";
     $stmt_tags = $dbh->prepare($sql_tags);
     $stmt_tags->execute();
 
     $tags_rs = $stmt_tags->fetchAll(PDO::FETCH_ASSOC);
     $tags_ov = array();
     foreach ($tags_rs as $tag) {
-        array_push($tags_ov, $tag['tag']);
+        $wordList = explode("|", $tag['tags']);
+        foreach ($wordList as $w) {
+            if (!in_array($w, $tags_ov)) {
+                array_push($tags_ov, $w);
+            }
+        }
     }
 } catch (PDOException $ex) {
-    $arrResult['rsStat'] = false;
-    $arrResult['rsRes'] = $ex->getMessage();
+    echo $ex->getMessage();
 } catch (Exception $exc) {
     echo $exc->getMessage();
 }
@@ -112,9 +117,9 @@ try {
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="browsing.php">Browsing Room<span class="sr-only">(current)</span></a></li>
+                            <li><a href="browsing.php" target = '_blank'>Browsing Room<span class="sr-only">(current)</span></a></li>
                             <li class="active"><a href="materials.php">Materials Room</a></li>
-                            <li><a href="history.php">History</a></li>
+                            <li><a href="history.php" target = '_blank'>History</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <p class="navbar-text">Dataset: HKALLzh --- 497,519 tweets (from 2014-08-24 22:06:20 to 2014-12-17 13:55:22)</p>
@@ -188,7 +193,7 @@ try {
                         </div>
                         <!-- myModal-b end-->
                         <script>
-                            var uID = 0;
+                            var uID = <?php echo $intUID; ?>
 //                            first group column.
                             $("input#subg1").on("focus", function () {
                                 $('#myModal_a').modal('show');
@@ -201,9 +206,9 @@ try {
                                     val_a[i] = w[1];
                                 });
                                 $("input#subg1").val(val_a);
-                                groupMaterial(uID, val_a,'#grouptags1');
+                                groupMaterial(uID, val_a, '#grouptags1');
                             });
-                            
+
 //                            second group column.
                             $("input#subg2").on("focus", function () {
                                 $('#myModal_b').modal('show');
@@ -216,7 +221,7 @@ try {
                                     val_b[i] = w[1];
                                 });
                                 $("input#subg2").val(val_b);
-                                groupMaterial(uID, val_b,'#grouptags2');
+                                groupMaterial(uID, val_b, '#grouptags2');
                             });
                         </script>
                     </div>

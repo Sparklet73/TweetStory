@@ -1,7 +1,9 @@
 <?php
+session_start();
+
 require_once 'config.php';
 
-$intUID = 0;
+$intUID = $_SESSION['uID'];
 $reHistoryID = isset($_GET['reHID']) ? $_GET['reHID'] : 0;
 
 try {
@@ -179,8 +181,8 @@ try {
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Browsing Room<span class="sr-only">(current)</span></a></li>
-                            <li><a href="materials.php">Materials Room</a></li>
-                            <li><a href="history.php">History</a></li>
+                            <li><a href="materials.php" target = '_blank'>Materials Room</a></li>
+                            <li><a href="history.php" target = '_blank'>History</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <p class="navbar-text">Dataset: HKALLzh --- 497,519 tweets (from 2014-08-24 22:06:20 to 2014-12-17 13:55:22)</p>
@@ -374,7 +376,7 @@ try {
                     </div>
                 </div>
                 <script>
-                    var userID = 0; //for test using.
+                    var userID = <?php echo $intUID; ?>; //for test using.
                     var tv = <?php echo $t_w; ?>, kv = <?php echo $k_w; ?>, uv = <?php echo $u_w; ?>, nv = <?php echo $n_w; ?>;
                     $('#timeSlider').bootstrapSlider({});
                     $("#timeSlider").on("slide", function (slideEvt) {
@@ -433,10 +435,9 @@ try {
         </div>
         <script>
 //            當使用者按下Collect按鈕時，紀錄該則推文ID。
-            var uID = 0;
             $(document).ready(function () {
                 $("#tweetsDisplay").on("click", "a.btn-collect", function () {
-                    saveMaterial(uID, $(this).attr("id"));
+                    saveMaterial(userID, $(this).attr("id"));
                 });
             });
         </script>

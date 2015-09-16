@@ -164,6 +164,7 @@ try {
         $history->bindParam(':nouns_w', $intNounsW, \PDO::PARAM_INT);
 //        $history->bindParam(':set_tweetsID', $set_tweetsID, \PDO::PARAM_STR);
         $history->execute();
+//        紀錄最後一筆歷史的id，以方便新增下一筆。
         $lastHistoryId = $dbh->lastInsertId();
     }
 
