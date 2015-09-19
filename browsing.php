@@ -46,7 +46,11 @@ try {
         <script src="nprogress/nprogress.js"></script>
         <link rel="stylesheet" href="nprogress/nprogress.css" type="text/css" />
         <script src="highcharts/highcharts.js"></script>
+        <script src="model/time/timeChart.js"></script>
         <script src="returnTweetsCnt.js"></script>
+        <script src="vis/vis.min.js"></script>
+        <link rel="stylesheet" href="vis/vis.min.css" type="text/css"/>
+        <script src="model/keywords/keywordsGraph.js"></script>
         <script src="showTweets.js"></script>
         <script src="tweetParser/jquery.tweetParser.min.js"></script>
         <script src="linkurious/build/sigma.require.js"></script>
@@ -58,9 +62,6 @@ try {
         <script src="model/users/filterUsers.js"></script>
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         <link rel="stylesheet" href="tweetParser/css/tweetParser.css" type="text/css" />
-        <script src="d3/d3.min.js"></script>
-        <script src="model/keywords/keywordsGraph.js"></script>
-        <script src="model/time/timeChart.js"></script>
         <script src="doMaterial.js"></script>
         <script src="bookmarkHistory.js"></script>
         <style type="text/css">    
@@ -71,11 +72,16 @@ try {
                 /*no scrollable bar*/
                 overflow: hidden; 
             }
-            #timeChart, #relationGraph, #userGraph, #keywordsGraph {
-                /*                top: 0;
-                                bottom: 0;
-                                left: 0;
-                                right: 0;*/
+            #timeChart { 
+                height: 350px;
+            }
+            #keywordsGraph {
+                height: 340px;
+            }
+            #relationGraph {
+                height: 335px;
+            } 
+            #userGraph {
                 height: 350px;
             }
             /*            #well2 {
@@ -125,21 +131,21 @@ try {
             }
             /*----usergraph filter end-----*/
             /*----keywordsGraph 的設定------*/
-            .wordnode {
-                cursor: pointer;
-            }
-            .wordnode:hover {
-                stroke: #000;
-                stroke-width: 1.5px;
-            }
-            .wordnode--leaf {
-                fill: white;
-            }
-            .label,
-            .wordnode--root,
-            .wordnode--leaf {
-                pointer-events: none;
-            }
+            /*            .wordnode {
+                            cursor: pointer;
+                        }
+                        .wordnode:hover {
+                            stroke: #000;
+                            stroke-width: 1.5px;
+                        }
+                        .wordnode--leaf {
+                            fill: white;
+                        }
+                        .label,
+                        .wordnode--root,
+                        .wordnode--leaf {
+                            pointer-events: none;
+                        }*/
             /*----keywordsGraph 設定 結束-----*/
             /*----bootstrap Tags slider 設定 開始-----*/
             #well .b {
@@ -454,13 +460,42 @@ try {
                             <li><a href="#tab4primary" data-toggle="tab">Noun Co-word</a></li>
                         </ul>
                     </div>
-                    <div class="panel-body" style="padding: 2px;">
+                    <div class="panel-body" style="padding: 2px;height:380px;">
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="tab1primary">
                                 <div id="timeChart" style="overflow-y: hidden; overflow-x:auto;"></div>
                             </div>
                             <div class="tab-pane fade" id="tab2primary">
-                                <div style="text-align: right;">
+                                <div class="col-md-10">
+                                    <select id="week-keywords">
+                                        <option selected value="week1">week 1 - 2014-8-24 ---</option>
+                                        <option value="week2">week 2 - 2014-8-25 to 2014-8-31</option>
+                                        <option value="week3">week 3 - 2014-9-1 to 2014-9-7</option>
+                                        <option value="week4">week 4 - 2014-9-8 to 2014-9-14</option>
+                                        <option value="week5">week 5 - 2014-9-15 to 2014-9-21</option>
+                                        <option value="week6">week 6 - 2014-9-22 to 2014-9-28</option>
+                                        <option value="week7">week 7 - 2014-9-29 to 2014-10-5</option>
+                                        <option value="week8">week 8 - 2014-10-6 to 2014-10-12</option>
+                                        <option value="week9">week 9 - 2014-10-13 to 2014-10-19</option>
+                                        <option value="week10">week 10 - 2014-10-20 to 2014-10-26</option>
+                                        <option value="week11">week 11 - 2014-10-27 to 2014-11-2</option>
+                                        <option value="week12">week 12 - 2014-11-3 to 2014-11-9</option>
+                                        <option value="week13">week 13 - 2014-11-10 to 2014-11-16</option>
+                                        <option value="week14">week 14 - 2014-11-17 to 2014-11-23</option>
+                                        <option value="week15">week 15 - 2014-11-24 to 2014-11-30</option>
+                                        <option value="week16">week 16 - 2014-12-1 to 2014-12-7</option>
+                                        <option value="week17">week 17 - 2014-12-8 to 2014-12-14</option>
+                                        <option value="week18">week 18 - 2014-12-15 to 2014-12-17</option>
+                                    </select>
+                                    <script>
+                                        $('#week-keywords').on('change', function () {
+//                                            alert($(this).val());
+                                            tmp = $(this).val().split("k");
+                                            changeWeekKeywords(tmp[1]);
+                                        });
+                                    </script>
+                                </div>
+                                <div class="col-md-2">
                                     <a class="btn btn-danger btn-add-tags-topics" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;text-shadow: black 3px 3px 3px;">
                                         <span type="button" name="add-tags-topics" id="add-tags-topics" class="glyphicon glyphicon-plus-sign"></span>
                                     </a>
