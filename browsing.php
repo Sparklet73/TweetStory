@@ -444,6 +444,7 @@ try {
             $(document).ready(function () {
                 $("#tweetsDisplay").on("click", "a.btn-collect", function () {
                     saveMaterial(userID, $(this).attr("id"));
+                    $(this).removeClass('btn-collect').addClass('btn-collected');
                 });
             });
         </script>

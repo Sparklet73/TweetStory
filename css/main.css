@@ -79,4 +79,5 @@
 .btn-collect:hover, .btn-collect:focus, .btn-collect:active, .btn-collect.active {color: #98EB18;}
 .btn-collect:active, .btn-collect.active {color: #fff;box-shadow: none;}
 .text-collect {color: #2E4272;}
+.btn-collected {cursor: default;pointer-events: none;color: #5c5c5c; background-color: #1c1c1c; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);}
 /*------------------collect button end---------------------*/

@@ -97,7 +97,7 @@ $(document).ready(function () {
                 function () {
                     s.settings({
                         defaultLabelSize: 18,
-                        font: "微軟正黑體",
+                        font: "Arial Unicode MS",
                         labelHoverBGColor: 'node',
                         defaultLabelHoverColor: '#000',
                         labelHoverShadow: 'node',
@@ -120,7 +120,7 @@ $(document).ready(function () {
                 function () {
                     s.settings({
                         defaultLabelSize: 18,
-                        font: "微軟正黑體",
+                        font: "Arial Unicode MS",
                         labelHoverBGColor: 'node',
                         defaultLabelHoverColor: '#000',
                         labelHoverShadow: 'node',
