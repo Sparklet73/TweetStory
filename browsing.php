@@ -244,7 +244,7 @@ try {
 
         <div class="col-md-3">
             <div class="row">
-                <h2>Tags zone</h2>
+                <h2>Tags Zone</h2>
                 <br>
                 <div class="row">
                     <div class="col-md-10" style="text-align: left;">
@@ -450,7 +450,7 @@ try {
         </script>
         <div class="col-md-5">
             <div class="row">
-                <h2>Story elements model</h2>
+                <h2>Story Elements Model</h2>
                 <b style="color:#686868;">Explore the data story and pick some tags you're interested in.</b>
                 <div class="panel with-nav-tabs panel-primary">
                     <div class="panel-heading">

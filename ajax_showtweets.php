@@ -61,7 +61,9 @@ try {
                 array_push($keywords_tags, $v);
                 $sql = "SELECT `id` FROM `HKALLzh_main` WHERE `text` LIKE '%" . $v . "%'";
                 $stmt = $dbh->prepare($sql);
-                $stmt->execute();
+                if (!$stmt->execute()) {
+                    throw new Exception("nothing");
+                }
                 while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     if (array_key_exists($arrQue['id'], $tweetScore)) {
                         $tweetScore[$arrQue['id']] += $intKeywordsW;
@@ -189,7 +191,8 @@ try {
     $arrResult['rsStat'] = false;
     $arrResult['rsTweet'] = $ex->getMessage();
 } catch (Exception $exc) {
-    echo $exc->getMessage();
+    $arrResult['rsStat'] = false;
+    $arrResult['rsTweet'] = $ex->getMessage();
 }
 
 unset($dbh);

@@ -58,15 +58,20 @@ function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
             makeTweetParsed();
             NProgress.done();
         } else {
-            showMessage('danger', data.rsTweet);
+            NProgress.done();
+            alert("These tags are not found in this dataset.");
         }
+    });
+    jqxhr.fail(function () {
+        NProgress.done();
+        alert("These tags are not found in this dataset.");
     });
 }
 
 function makeTweetContent(tid, time, user, user_des, content, rtcount, tags) {
     var rtn_content = '';
     rtn_content += '<div class="panel panel-info"><a class="tweet_user" href="http://twitter.com/' + user + '" ';
-    rtn_content += ' data-toggle="tooltip" title="'+ user_des + '">';
+    rtn_content += ' data-toggle="tooltip" title="' + user_des + '">';
     rtn_content += user + '</a><p class="tweet_time"> ' + time + ' </p><br>';
     rtn_content += '<p class="tweet">' + content + '</p>';
     rtn_content += '<p class="rtcnt">Retweet count: ' + rtcount + '</p>';
