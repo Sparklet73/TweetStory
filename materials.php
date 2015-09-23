@@ -48,8 +48,6 @@ try {
         <script src="jquery/jquery-ui.min.js"></script>
         <link href="bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
-        <script src="nprogress/nprogress.js"></script>
-        <link rel="stylesheet" href="nprogress/nprogress.css" type="text/css" />
         <!--<link href="tweetParser/css/tweetParser.css" rel="stylesheet" type="text/css" />-->
         <!--<link href="summernote/font-awesome.min.css" rel="stylesheet">-->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
@@ -196,14 +194,6 @@ try {
                         </div>
                         <!-- myModal-b end-->
                         <script>
-                            //            當開始執行ajax時的時候都會start，不管返回成功還是失敗都可以done
-                            $(document).ajaxStart(function () {
-                                NProgress.start();
-                            })
-                                    .ajaxStop(function () {
-                                        NProgress.done();
-                                    });
-
                             var uID = <?php echo $intUID; ?>
 //                            first group column.
                             $("input#subg1").on("focus", function () {
