@@ -432,6 +432,7 @@ try {
                         selectionHeader: "<div class='TagsArea'>Selected tags</div>"
                     });
                     $("button[name='btn_apply']").click(function () {
+                        var radioReset = true;
 //                        NProgress.start();
                         var current = new Date();
                         //format: 2015/9/2 14:42:8
@@ -453,15 +454,18 @@ try {
                         $('#radio-weights').attr("disabled", false);
                         $('#radio-time').attr("disabled", false);
                         $('#radio-rt').attr("disabled", false);
-
+                        $('#radio-weights').prop("checked", true);
+                        
                         $(function () {
                             $(document).on('change', 'input:radio[id^="radio-"]', function (event) {
                                 if ($(this).attr('id') == "radio-rt") {
                                     parseTags(userID, "rt", strDatetime, tags, tv, kv, uv, nv);
                                 } else if ($(this).attr('id') == "radio-time") {
                                     parseTags(userID, "time", strDatetime, tags, tv, kv, uv, nv);
-                                } else {
+                                } else if (radioReset===false) {
                                     parseTags(userID, "weightsNotHistory", strDatetime, tags, tv, kv, uv, nv);
+                                } else {
+                                    radioReset = false;
                                 }
 
                             });

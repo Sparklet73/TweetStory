@@ -33,6 +33,14 @@ try {
             }
         }
     }
+    $sql_newTxt = "INSERT IGNORE INTO `HKALLzh_userNote` (`uID`,`text`) values(" . $intUID . ",'')";
+    $stmt_newTxt = $dbh->prepare($sql_newTxt);
+    $stmt_newTxt->execute();
+
+    $sql_writeback = "SELECT `text` FROM `HKALLzh_userNote` WHERE `uID` = " . $intUID;
+    $stmt_content = $dbh->prepare($sql_writeback);
+    $stmt_content->execute();
+    $UserContent = $stmt_content->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $ex) {
     echo $ex->getMessage();
 } catch (Exception $exc) {
@@ -135,7 +143,7 @@ try {
                         <ol class="simple_with_animation vertical" style="height:560px;overflow-y:auto;">
                             <?php
                             foreach ($materialContent as $content) {
-                                echo "<li>" . $content['text'] . " <p style='text-align:right;color:#39AF26'>". $content['tt']."</p></li>";
+                                echo "<li>" . $content['text'] . " <p style='text-align:right;color:#0FA1FF'>". $content['tt']."</p></li>";
                             }
                             ?>
                         </ol>
@@ -194,7 +202,7 @@ try {
                         </div>
                         <!-- myModal-b end-->
                         <script>
-                            var uID = <?php echo $intUID; ?>
+                            var uID = <?php echo $intUID; ?>;
 //                            first group column.
                             $("input#subg1").on("focus", function () {
                                 $('#myModal_a').modal('show');
@@ -270,19 +278,47 @@ try {
             <div class="col-md-4">
                 <div class="row" style="margin-left:0px;">
                     <h5>Text Editor</h5>
-                    <div class="summernote" id="summernote">Write a news story...</div>
+                    <div class="summernote" id="summernote1"></div>
+                    <input type="hidden" id="usr_id" value="<?php echo $intUID;?>">
+                    <span id="saving"></span>
                 </div>
                 <script>
                     $(document).ready(function () {
-                        $('.summernote').summernote({
+                        $('#summernote1').summernote({
 //                            width: 430,
                             height: 270,
                             minHeight: 250,
                             maxHeight: 250, // set maximum height of editor
                             focus: true // set focus to editable area after initializing summernote
                         });
-                        $('.summernote').summernote();
+                        $('#summernote1').summernote();
+                        $("#summernote1").code("<?php echo $UserContent['text']; ?>");
                     });
+                    setInterval(updateUserContent, 30000);
+                    function updateUserContent() {
+                        $('#saving').html('儲存中...');
+                        var userText = $('#summernote1').code();
+                        var uID = $("#usr_id").val();
+                        console.log(userText);
+                        $.ajaxSetup({
+                            cache: false
+                        });
+                        var jqxhr = $.getJSON('ajax_autoSaveUserNote.php', {
+                            uID: uID,
+                            content: userText
+                        });
+                        jqxhr.done(function (data) {
+                            if (data.rsStat) {
+                                console.log("Update success!");
+                                $('#saving').html("已儲存...");
+                                setTimeout(function(){
+                                    $('#saving').html("");
+                                }, 3000);
+                            } else {
+                                console.log("Update failed!");
+                            }
+                        });
+                    }
                 </script>
             </div>
         </div>
