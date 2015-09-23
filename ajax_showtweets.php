@@ -172,7 +172,7 @@ try {
         }
 
 //    return tweets to tweets display area
-        $sql = "SELECT `id`, `from_user_name`, `from_user_description`, `created_at`, `text`, `retweet_count` 
+        $sql = "SELECT `id`, `from_user_name`, `from_user_description`, DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at, `text`, `retweet_count` 
             FROM `HKALLzh_main` 
             WHERE `id` IN (" . implode(',', array_keys($arrResult['rsTweet'])) . ")";
 
@@ -277,7 +277,7 @@ try {
                 }
             }
             //    return tweets to tweets display area
-            $sql = "SELECT `id`, `from_user_name`, `from_user_description`, `created_at`, `text`, `retweet_count` 
+            $sql = "SELECT `id`, `from_user_name`, `from_user_description`, DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at, `text`, `retweet_count` 
             FROM `HKALLzh_main` 
             WHERE `id` IN (" . implode(',', array_keys($arrResult['rsTweet'])) . ")";
 
@@ -387,7 +387,7 @@ try {
         }
 
 //    return tweets to tweets display area
-        $sql = "SELECT `id`, `from_user_name`, `from_user_description`, `created_at`, `text`, `retweet_count` 
+        $sql = "SELECT `id`, `from_user_name`, `from_user_description`, DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at, `text`, `retweet_count` 
             FROM `HKALLzh_main` 
             WHERE `id` IN (" . implode(',', array_keys($arrResult['rsTweet'])) . ")";
 

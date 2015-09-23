@@ -55,6 +55,6 @@ footer a, footer a:hover {color: #3498db}
 .tweet-container h2 {color: #34495e;padding-bottom:15px}.tweet_link{color:#1abc9c}
 .tweet_mention {color: #3947cc}
 .hashtag{color:#f39c12}
-.tweet_time{color:#7e7e7e;text-align:right;}
+.tweet_time{color: #0FA1FF;text-align:right;}
 .tweet_user{color: #00aced;text-align: left;font-size: 16px;font-weight: bold;float:left;}
-.rtcnt{text-align: right;}
+.rtcnt{color: #077AC5;text-align: right;}

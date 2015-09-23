@@ -75,7 +75,7 @@ function makeTweetContent(tid, time, user, user_des, content, rtcount, tags) {
     rtn_content += ' target = "_blank" data-toggle="tooltip" title="'+ user_des + '">';
     rtn_content += user + '</a><p class="tweet_time"> ' + time + ' </p><br>';
     rtn_content += '<p class="tweet">' + content + '</p>';
-    rtn_content += '<p class="rtcnt">Retweet count: ' + rtcount + '</p>';
+    rtn_content += '<p class="rtcnt">RTs: ' + rtcount + '</p>';
     rtn_content += '<a class="btn icon-btn btn-collect" id="cl-' + tid + '">';
     rtn_content += '<span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-collect"></span>Collect</a>';
     var tagList = tags.split('/');
