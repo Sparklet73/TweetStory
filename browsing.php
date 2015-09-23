@@ -201,9 +201,12 @@ try {
                     <h2>Tweets Display Area</h2>
                     <!--<b style="color:#686868;">Show tweets with score by your tags adjustment.</b>-->
                     <!--<ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>-->
-                    <div class="row" style="text-align: right;">
+                    <div class="row" style="text-align: right;margin-bottom:5px;">
                         <label class="radio-inline">
                             <input type="radio" name="inlineRadioOptions" id="radio-weights" value="radio-weights" checked disabled> Order by weights.
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="radio-time" value="radio-time" disabled> Order by time.
                         </label>
                         <label class="radio-inline">
                             <input type="radio" name="inlineRadioOptions" id="radio-rt" value="radio-rt" disabled> Order by RT counts.
@@ -448,12 +451,15 @@ try {
                         }
                         $("#btn-boookmark").attr('class', 'glyphicon glyphicon-bookmark');
                         $('#radio-weights').attr("disabled", false);
+                        $('#radio-time').attr("disabled", false);
                         $('#radio-rt').attr("disabled", false);
 
                         $(function () {
                             $(document).on('change', 'input:radio[id^="radio-"]', function (event) {
                                 if ($(this).attr('id') == "radio-rt") {
                                     parseTags(userID, "rt", strDatetime, tags, tv, kv, uv, nv);
+                                } else if ($(this).attr('id') == "radio-time") {
+                                    parseTags(userID, "time", strDatetime, tags, tv, kv, uv, nv);
                                 } else {
                                     parseTags(userID, "weightsNotHistory", strDatetime, tags, tv, kv, uv, nv);
                                 }
@@ -492,7 +498,7 @@ try {
                         });
                     }
                 });
-                
+
                 $("#tweetsDisplay").on("mousedown", "a.tweet_mention", function (e) {
                     if (e.which == 3) //1: left, 2: middle, 3: right
                     {

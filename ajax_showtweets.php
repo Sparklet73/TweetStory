@@ -400,6 +400,110 @@ try {
             $arrResult['rsTweet'][$arrQue["id"]]["text"] = $arrQue['text'];
             $arrResult['rsTweet'][$arrQue["id"]]["retweet_cnt"] = $arrQue['retweet_count'];
         }
+    } else if ($strOrderby == "time") {
+        
+        $time_tags = array();
+        $keywords_tags = array();
+        $users_tags = array();
+        $nouns_tags = array();
+
+        $tweetTime = array();
+        $tweetTags = array();
+        foreach ($arrTweetList as $key => $value) {
+            if ($key == "Time") {
+                foreach ($value as $v) {
+                    array_push($time_tags, $v);
+                    $sql = "SELECT `id`, DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at FROM `HKALLzh_main` WHERE `created_at` LIKE '" . $v . "%'";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute();
+                    while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        if (array_key_exists($arrQue['id'], $tweetTime)) {
+                            $tweetTags[$arrQue['id']] .= "/t|" . $v;
+                        } else {
+                            $tweetTime[$arrQue['id']] = $arrQue['created_at'];
+                            $tweetTags[$arrQue['id']] = "t|" . $v;
+                        }
+                    }
+                }
+            }
+            if ($key == "Keywords") {
+                foreach ($value as $v) {
+                    array_push($keywords_tags, $v);
+                    $sql = "SELECT `id`,DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at FROM `HKALLzh_main` WHERE `text` LIKE '%" . $v . "%'";
+                    $stmt = $dbh->prepare($sql);
+                    if (!$stmt->execute()) {
+                        throw new Exception("nothing");
+                    }
+                    while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        if (array_key_exists($arrQue['id'], $tweetTime)) {
+                            $tweetTags[$arrQue['id']] .= "/k|" . $v;
+                        } else {
+                            $tweetTime[$arrQue['id']] = $arrQue['created_at'];
+                            $tweetTags[$arrQue['id']] = "k|" . $v;
+                        }
+                    }
+                }
+            }
+            if ($key == "Users") {
+                foreach ($value as $v) {
+                    array_push($users_tags, $v);
+                    $sql = "SELECT `id`,DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at FROM `HKALLzh_main` WHERE `from_user_name` LIKE '" . $v . "'";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute();
+                    while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        if (array_key_exists($arrQue['id'], $tweetTime)) {
+                            $tweetTags[$arrQue['id']] .= "/u|" . $v;
+                        } else {
+                            $tweetTime[$arrQue['id']] = $arrQue['created_at'];
+                            $tweetTags[$arrQue['id']] = "u|" . $v;
+                        }
+                    }
+                }
+            }
+            if ($key == "Nouns") {
+                foreach ($value as $v) {
+                    array_push($nouns_tags, $v);
+                    $sql = "SELECT `id`,DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at FROM `HKALLzh_main` WHERE `text` LIKE '%" . $v . "%'";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute();
+                    while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        if (array_key_exists($arrQue['id'], $tweetTime)) {
+                            $tweetTags[$arrQue['id']] .= "/n|" . $v;
+                        } else {
+                            $tweetTime[$arrQue['id']] = $arrQue['created_at'];
+                            $tweetTags[$arrQue['id']] = "n|" . $v;
+                        }
+                    }
+                }
+            }
+            asort($tweetTime);
+
+            $arrResult['rsStat'] = true;
+            $arrResult['rsTweet'] = array();
+            $i = 0;
+            foreach ($tweetTime as $k => $v) {
+                if ($i < 3000) {
+                    $arrResult['rsTweet'][$k]["tags"] = $tweetTags[$k];
+                    $i += 1;
+                } else {
+                    break;
+                }
+            }
+            //    return tweets to tweets display area
+            $sql = "SELECT `id`, `from_user_name`, `from_user_description`, DATE_FORMAT(`created_at`,'%Y-%m-%d %H:%i') created_at, `text`, `retweet_count` 
+            FROM `HKALLzh_main` 
+            WHERE `id` IN (" . implode(',', array_keys($arrResult['rsTweet'])) . ")";
+
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute();
+            while ($arrQue = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $arrResult['rsTweet'][$arrQue["id"]]["from_user_name"] = $arrQue['from_user_name'];
+                $arrResult['rsTweet'][$arrQue["id"]]["from_user_description"] = $arrQue['from_user_description'];
+                $arrResult['rsTweet'][$arrQue["id"]]["created_at"] = $arrQue['created_at'];
+                $arrResult['rsTweet'][$arrQue["id"]]["text"] = $arrQue['text'];
+                $arrResult['rsTweet'][$arrQue["id"]]["retweet_cnt"] = $arrQue['retweet_count'];
+            }
+        }
     }
 } catch (PDOException $ex) {
     $arrResult['rsStat'] = false;
