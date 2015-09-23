@@ -170,7 +170,7 @@ try {
         </style>
     </head>
 
-    <body>
+    <body oncontextmenu="return false;">
         <div class="mywindow" style="margin:0 auto;">
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
@@ -378,7 +378,7 @@ try {
                 ?>
                 <br>
                 <div class="row" style="text-align: center">
-                    <button type="button" name="btn_clear" id="btn_clear" class="btn btn-clear" style="margin-top: 5px;">Clear</button>
+                    <!--<button type="button" name="btn_clear" id="btn_clear" class="btn btn-clear" style="margin-top: 5px;">Clear</button>-->
                     <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply</button>
                 </div>
                 <input type="hidden" id="hbm">
@@ -456,6 +456,19 @@ try {
                 $("#tweetsDisplay").on("click", "a.btn-collect", function () {
                     saveMaterial(userID, $(this).attr("id"));
                     $(this).removeClass('btn-collect').addClass('btn-collected');
+                });
+                
+                $("#tweetsDisplay").on("mousedown", "a.tweet_user", function (e) {
+                    if (e.which == 3) //1: left, 2: middle, 3: right
+                    {
+                        $('#TagsArea').multiSelect('addOption', {value: "Users|" + $(this).attr("id"), text: $(this).attr("id"), index: 0, nested: 'Users'});
+                        var found = [];
+                        $("#TagsArea option").each(function () {
+                            if ($.inArray(this.value, found) !== -1)
+                                $(this).remove();
+                            found.push(this.value);
+                        });
+                    }
                 });
             });
         </script>

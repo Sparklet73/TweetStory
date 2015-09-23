@@ -70,8 +70,8 @@ function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
 
 function makeTweetContent(tid, time, user, user_des, content, rtcount, tags) {
     var rtn_content = '';
-    rtn_content += '<div class="panel panel-info"><a class="tweet_user" href="http://twitter.com/' + user + '" ';
-    rtn_content += ' data-toggle="tooltip" title="' + user_des + '">';
+    rtn_content += '<div class="panel panel-info"><a class="tweet_user" id="'+ user +'" href="http://twitter.com/' + user + '" ';
+    rtn_content += ' target = "_blank" data-toggle="tooltip" title="'+ user_des + '">';
     rtn_content += user + '</a><p class="tweet_time"> ' + time + ' </p><br>';
     rtn_content += '<p class="tweet">' + content + '</p>';
     rtn_content += '<p class="rtcnt">Retweet count: ' + rtcount + '</p>';
