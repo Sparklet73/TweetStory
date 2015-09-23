@@ -56,14 +56,14 @@ function parseTags(userID, strDatetime, aryLists, tv, kv, uv, nv) {
                 $('#tweetsDisplay').append(makeTweetContent(index, val.created_at, val.from_user_name, val.from_user_description, val.text, val.retweet_cnt, val.tags));
             });
             makeTweetParsed();
-            NProgress.done();
+//            NProgress.done();
         } else {
-            NProgress.done();
+//            NProgress.done();
             alert("These tags are not found in this dataset.");
         }
     });
     jqxhr.fail(function () {
-        NProgress.done();
+//        NProgress.done();
         alert("These tags are not found in this dataset.");
     });
 }

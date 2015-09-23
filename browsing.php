@@ -233,6 +233,14 @@ try {
         </div>
         <!--好像不需要在這邊assign了，當append上推文後，有另外寫函數去執行tweetParse。-->
         <script type="text/javascript">
+            //            當開始執行ajax時的時候都會start，不管返回成功還是失敗都可以done
+            $(document).ajaxStart(function () {
+                NProgress.start();
+            })
+                    .ajaxStop(function () {
+                        NProgress.done();
+                    });
+
             $(".tweet").tweetParser({
                 urlClass: "tweet_link", //this is default
                 userClass: "tweet_mention", //this is default
@@ -369,7 +377,10 @@ try {
                 }
                 ?>
                 <br>
-                <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply</button>
+                <div class="row" style="text-align: center">
+                    <button type="button" name="btn_clear" id="btn_clear" class="btn btn-clear" style="margin-top: 5px;">Clear</button>
+                    <button type="button" name="btn_apply" id="btn_apply" class="btn btn-apply" style="margin-top: 5px;">Apply</button>
+                </div>
                 <input type="hidden" id="hbm">
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog">
@@ -410,7 +421,7 @@ try {
                         selectionHeader: "<div class='TagsArea'>Selected tags</div>"
                     });
                     $("button[name='btn_apply']").click(function () {
-                        NProgress.start();
+//                        NProgress.start();
                         var current = new Date();
                         //format: 2015/9/2 14:42:8
                         var strDatetime = current.getFullYear() + "/"
@@ -422,7 +433,7 @@ try {
                         var tags = $('select#TagsArea').val();
                         if (tags === null) {
                             $('#myModal').modal('show');
-                            NProgress.done();
+//                            NProgress.done();
                         } else {
                             //console.log(tags + tv + kv + uv + nv);
                             parseTags(userID, strDatetime, tags, tv, kv, uv, nv);
@@ -467,40 +478,33 @@ try {
                                 <div id="timeChart" style="overflow-y: hidden; overflow-x:auto;"></div>
                             </div>
                             <div class="tab-pane fade" id="tab2primary">
-                                <div class="col-md-10">
-                                    <select id="week-keywords">
-                                        <option selected value="week1">week 1 - 2014-8-24 ---</option>
-                                        <option value="week2">week 2 - 2014-8-25 to 2014-8-31</option>
-                                        <option value="week3">week 3 - 2014-9-1 to 2014-9-7</option>
-                                        <option value="week4">week 4 - 2014-9-8 to 2014-9-14</option>
-                                        <option value="week5">week 5 - 2014-9-15 to 2014-9-21</option>
-                                        <option value="week6">week 6 - 2014-9-22 to 2014-9-28</option>
-                                        <option value="week7">week 7 - 2014-9-29 to 2014-10-5</option>
-                                        <option value="week8">week 8 - 2014-10-6 to 2014-10-12</option>
-                                        <option value="week9">week 9 - 2014-10-13 to 2014-10-19</option>
-                                        <option value="week10">week 10 - 2014-10-20 to 2014-10-26</option>
-                                        <option value="week11">week 11 - 2014-10-27 to 2014-11-2</option>
-                                        <option value="week12">week 12 - 2014-11-3 to 2014-11-9</option>
-                                        <option value="week13">week 13 - 2014-11-10 to 2014-11-16</option>
-                                        <option value="week14">week 14 - 2014-11-17 to 2014-11-23</option>
-                                        <option value="week15">week 15 - 2014-11-24 to 2014-11-30</option>
-                                        <option value="week16">week 16 - 2014-12-1 to 2014-12-7</option>
-                                        <option value="week17">week 17 - 2014-12-8 to 2014-12-14</option>
-                                        <option value="week18">week 18 - 2014-12-15 to 2014-12-17</option>
-                                    </select>
-                                    <script>
-                                        $('#week-keywords').on('change', function () {
+                                <select id="week-keywords">
+                                    <option selected value="week1">week 1 - 2014-8-24 ---</option>
+                                    <option value="week2">week 2 - 2014-8-25 to 2014-8-31</option>
+                                    <option value="week3">week 3 - 2014-9-1 to 2014-9-7</option>
+                                    <option value="week4">week 4 - 2014-9-8 to 2014-9-14</option>
+                                    <option value="week5">week 5 - 2014-9-15 to 2014-9-21</option>
+                                    <option value="week6">week 6 - 2014-9-22 to 2014-9-28</option>
+                                    <option value="week7">week 7 - 2014-9-29 to 2014-10-5</option>
+                                    <option value="week8">week 8 - 2014-10-6 to 2014-10-12</option>
+                                    <option value="week9">week 9 - 2014-10-13 to 2014-10-19</option>
+                                    <option value="week10">week 10 - 2014-10-20 to 2014-10-26</option>
+                                    <option value="week11">week 11 - 2014-10-27 to 2014-11-2</option>
+                                    <option value="week12">week 12 - 2014-11-3 to 2014-11-9</option>
+                                    <option value="week13">week 13 - 2014-11-10 to 2014-11-16</option>
+                                    <option value="week14">week 14 - 2014-11-17 to 2014-11-23</option>
+                                    <option value="week15">week 15 - 2014-11-24 to 2014-11-30</option>
+                                    <option value="week16">week 16 - 2014-12-1 to 2014-12-7</option>
+                                    <option value="week17">week 17 - 2014-12-8 to 2014-12-14</option>
+                                    <option value="week18">week 18 - 2014-12-15 to 2014-12-17</option>
+                                </select>
+                                <script>
+                                    $('#week-keywords').on('change', function () {
 //                                            alert($(this).val());
-                                            tmp = $(this).val().split("k");
-                                            changeWeekKeywords(tmp[1]);
-                                        });
-                                    </script>
-                                </div>
-                                <div class="col-md-2">
-                                    <a class="btn btn-danger btn-add-tags-topics" href="#" data-toggle="tooltip" title="Add these tags to zone." style="margin-bottom:3px;text-shadow: black 3px 3px 3px;">
-                                        <span type="button" name="add-tags-topics" id="add-tags-topics" class="glyphicon glyphicon-plus-sign"></span>
-                                    </a>
-                                </div>
+                                        tmp = $(this).val().split("k");
+                                        changeWeekKeywords(tmp[1]);
+                                    });
+                                </script>        
                                 <div id="keywordsGraph"></div>
                             </div>
                             <div class="tab-pane fade" id="tab3primary">
