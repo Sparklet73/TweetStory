@@ -492,6 +492,20 @@ try {
                         });
                     }
                 });
+                
+                $("#tweetsDisplay").on("mousedown", "a.tweet_mention", function (e) {
+                    if (e.which == 3) //1: left, 2: middle, 3: right
+                    {
+                        var Username = $(this).attr("id").toLowerCase();
+                        $('#TagsArea').multiSelect('addOption', {value: "Users|" + Username, text: Username, index: 0, nested: 'Users'});
+                        var found = [];
+                        $("#TagsArea option").each(function () {
+                            if ($.inArray(this.value, found) !== -1)
+                                $(this).remove();
+                            found.push(this.value);
+                        });
+                    }
+                });
             });
         </script>
         <div class="col-md-5">
