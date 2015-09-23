@@ -199,8 +199,16 @@ try {
             <div class="col-md-4">
                 <div class="row">
                     <h2>Tweets Display Area</h2>
-                    <b style="color:#686868;">Show tweets with score by your tags adjustment.</b>
+                    <!--<b style="color:#686868;">Show tweets with score by your tags adjustment.</b>-->
                     <!--<ul style="text-align: right;margin-right: 20px;margin-bottom: 3px;">return 6 tweets</ul>-->
+                    <div class="row" style="text-align: right;">
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="radio-weights" value="radio-weights" checked disabled> Order by weights.
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="radio-rt" value="radio-rt" disabled> Order by RT counts.
+                        </label>
+                    </div>
                 </div>
                 <div class="tweet-container" style="overflow-y: auto; overflow-x: hidden;">
                     <div class="row" id="tweetsDisplay">
@@ -436,9 +444,22 @@ try {
 //                            NProgress.done();
                         } else {
                             //console.log(tags + tv + kv + uv + nv);
-                            parseTags(userID, strDatetime, tags, tv, kv, uv, nv);
+                            parseTags(userID, "weights", strDatetime, tags, tv, kv, uv, nv);
                         }
                         $("#btn-boookmark").attr('class', 'glyphicon glyphicon-bookmark');
+                        $('#radio-weights').attr("disabled", false);
+                        $('#radio-rt').attr("disabled", false);
+
+                        $(function () {
+                            $(document).on('change', 'input:radio[id^="radio-"]', function (event) {
+                                if ($(this).attr('id') == "radio-rt") {
+                                    parseTags(userID, "rt", strDatetime, tags, tv, kv, uv, nv);
+                                } else {
+                                    parseTags(userID, "weightsNotHistory", strDatetime, tags, tv, kv, uv, nv);
+                                }
+
+                            });
+                        });
                     });
                 </script>
             </div>
@@ -457,11 +478,12 @@ try {
                     saveMaterial(userID, $(this).attr("id"));
                     $(this).removeClass('btn-collect').addClass('btn-collected');
                 });
-                
+
                 $("#tweetsDisplay").on("mousedown", "a.tweet_user", function (e) {
                     if (e.which == 3) //1: left, 2: middle, 3: right
                     {
-                        $('#TagsArea').multiSelect('addOption', {value: "Users|" + $(this).attr("id"), text: $(this).attr("id"), index: 0, nested: 'Users'});
+                        var Username = $(this).attr("id").toLowerCase();
+                        $('#TagsArea').multiSelect('addOption', {value: "Users|" + Username, text: Username, index: 0, nested: 'Users'});
                         var found = [];
                         $("#TagsArea option").each(function () {
                             if ($.inArray(this.value, found) !== -1)
