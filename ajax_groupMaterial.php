@@ -30,11 +30,11 @@ try {
         array_push($strSql, $sq);
     }
     
-    $sql = "SELECT `HKALLzh_main`.`text`
+    $sql = "SELECT `HKALLzh_main`.`text`,`HKALLzh_main`.`created_at` tt
             FROM `HKALLzh_materials`, `HKALLzh_main`
             WHERE (" . implode(" OR ", $strSql) .
             ") and `HKALLzh_materials`.`tweetID`=`HKALLzh_main`.`id` 
-            and `HKALLzh_materials`.`userID` = " . $intUID;
+            and `HKALLzh_materials`.`userID` = " . $intUID . " GROUP BY `text` ORDER BY tt";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
