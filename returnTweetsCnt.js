@@ -86,7 +86,7 @@ function NounShowNumOfTweets(aryLists) {
 //            console.log(arr);
             TweetsCount(arr, "# of tweets including these words.", '#ED3C3C');
         } else {
-            showMessage('danger', data.rsDate);
+            console.log('return # of tweets wrong!');
         }
     });
 }
@@ -110,7 +110,31 @@ function UserShowNumOfTweets(strUser) {
             });
             TweetsCount(arr, "# of tweets mentioned to this user.", '#248E8E');
         } else {
-            showMessage('danger', data.rsUser);
+            console.log('return # of tweets wrong!');
+        }
+    });
+}
+
+//keywords graph
+function KeywordShowNumOfTweets(strKeyword) {
+    $.ajaxSetup({
+        cache: false
+    });
+
+    var jqxhr = $.getJSON('ajax_KeywordReturnTweetsCnt.php', {
+        sk: strKeyword
+    });
+
+    jqxhr.done(function (data) {
+        if (data.rsStat) {
+            var arr = [];
+            $.each(data.rsKeyword, function (index, val) {
+                var mydate = val.dd.split("/");
+                arr.push([Date.UTC(parseInt(mydate[0]), parseInt(mydate[1]) - 1, parseInt(mydate[2])), parseInt(val.cnt)]);
+            });
+            TweetsCount(arr, "# of tweets have this keyword.", '#4F2C73');
+        } else {
+            console.log('return # of tweets wrong!');
         }
     });
 }
